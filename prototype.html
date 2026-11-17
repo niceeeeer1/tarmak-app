@@ -1,0 +1,1046 @@
+<title>Тармақ колледж желісі</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: single 620px column like a mobile app, sticky top bar + tabs, fixed 5-button bottom nav, sheets slide up */
+:root{
+  --bg:#ffffff; --fg:#0f1012; --muted:#86888f; --line:#e5e5e8; --surface:#f2f2f4; --elev:#ffffff;
+  --link:#1f6ad1; --verified:#1d9bf0; --official:#0f9f74; --like:#ff3040;
+  --ok:#147a48; --ok-bg:#e2f4ea; --warn:#9a5b00; --warn-bg:#fcefd6; --info:#1f5bbd; --info-bg:#e3ecfa;
+  --bad:#cf2119; --bad-bg:#fde5e3; --neutral:#5b5d66; --neutral-bg:#ececef;
+  --scrim:rgba(10,10,12,.38); --shadow:0 10px 30px rgba(0,0,0,.12);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101010; --fg:#f3f5f7; --muted:#8b8c92; --line:#272729; --surface:#1d1d1f; --elev:#1a1a1b;
+  --link:#62a6ff; --verified:#38a9f5; --official:#2fc993; --like:#ff4a5c;
+  --ok:#4fd48e; --ok-bg:#13301f; --warn:#f2b552; --warn-bg:#352610; --info:#82acff; --info-bg:#16243f;
+  --bad:#ff6b60; --bad-bg:#3b1614; --neutral:#a7a8ae; --neutral-bg:#2a2a2d;
+  --scrim:rgba(0,0,0,.62); --shadow:0 10px 30px rgba(0,0,0,.6); color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#101010; --fg:#f3f5f7; --muted:#8b8c92; --line:#272729; --surface:#1d1d1f; --elev:#1a1a1b;
+  --link:#62a6ff; --verified:#38a9f5; --official:#2fc993; --like:#ff4a5c;
+  --ok:#4fd48e; --ok-bg:#13301f; --warn:#f2b552; --warn-bg:#352610; --info:#82acff; --info-bg:#16243f;
+  --bad:#ff6b60; --bad-bg:#3b1614; --neutral:#a7a8ae; --neutral-bg:#2a2a2d;
+  --scrim:rgba(0,0,0,.62); --shadow:0 10px 30px rgba(0,0,0,.6); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--font);font-size:15px;line-height:1.42;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button,input,textarea,select{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px;border-radius:8px}
+.app{max-width:620px;margin:0 auto;min-height:100vh;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+@media(min-width:660px){.app{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px)}
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:54px}
+.bar .l{display:flex;gap:2px;justify-self:start}.bar .r{justify-self:end;display:flex;gap:6px;align-items:center}
+.ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--fg)}
+.ib:hover{background:var(--surface)}
+.title{font-weight:700;font-size:16px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:2px;font-size:11.5px;font-weight:700;letter-spacing:.04em}
+.lang button{padding:5px 9px;border-radius:999px;color:var(--muted)}
+.lang button.on{background:var(--fg);color:var(--bg)}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);margin:0 -4px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;padding:11px 12px 10px;font-weight:600;color:var(--muted);border-bottom:1.5px solid transparent;white-space:nowrap;font-size:14.5px;transition:color .2s}
+.tabs button.on{color:var(--fg);border-color:var(--fg)}
+.item{border-bottom:1px solid var(--line);padding:4px 0 6px}
+.rph{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;font-weight:600;padding:8px 0 0 24px}
+.post{display:flex;gap:12px;padding:10px 0 4px;cursor:pointer}
+.post.static{cursor:default}
+.rail{width:36px;flex:none;display:flex;flex-direction:column;align-items:center}
+.rail .line{flex:1;width:2px;background:var(--line);border-radius:2px;margin:6px 0 -8px;min-height:18px}
+.main{flex:1;min-width:0}
+.ph{display:flex;align-items:center;gap:5px;min-height:22px}
+.name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62%}
+.name.link{cursor:pointer}
+.time{color:var(--muted);white-space:nowrap}
+.more{margin-left:auto;color:var(--muted);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none}
+.more:hover{background:var(--surface);color:var(--fg)}
+.txt{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:1px}
+.tag{color:var(--link);cursor:pointer;text-decoration:none}
+.tag:hover{text-decoration:underline}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;position:relative;flex:none;cursor:pointer;letter-spacing:.01em}
+.av.anon{background:var(--neutral-bg);color:var(--neutral);cursor:default}
+.av .plus{position:absolute;right:-4px;bottom:-4px;width:19px;height:19px;border-radius:50%;background:var(--fg);color:var(--bg);border:2px solid var(--bg);display:grid;place-items:center;transition:transform .2s}
+.av .plus:active{transform:scale(.8)}
+.acts{display:flex;align-items:center;gap:2px;margin:6px 0 0 -8px;flex-wrap:wrap}
+.act{display:flex;align-items:center;gap:5px;padding:6px 9px;border-radius:999px;color:var(--fg);font-size:13.5px;font-variant-numeric:tabular-nums;transition:background .15s,color .15s}
+.act:hover{background:var(--surface)}
+.act.liked{color:var(--like)}
+.act.reposted{color:var(--ok)}
+.act.conf{border:1px solid var(--line);margin-left:4px;font-weight:600;font-size:12.5px;padding:5px 10px}
+.act.conf.on{background:var(--info-bg);color:var(--info);border-color:transparent}
+@keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.38)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+.pop svg{animation:pop .45s cubic-bezier(.2,.8,.3,1.2)}
+@keyframes spin{from{transform:rotate(-180deg)}to{transform:none}}
+.spin svg{animation:spin .45s cubic-bezier(.2,.8,.2,1)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0 3px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--neutral-bg);color:var(--neutral);line-height:1.35;white-space:nowrap}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.warn{background:var(--warn-bg);color:var(--warn)}
+.chip.info{background:var(--info-bg);color:var(--info)}.chip.bad{background:var(--bad-bg);color:var(--bad)}
+.chip.num{font-variant-numeric:tabular-nums;background:transparent;border:1px solid var(--line);color:var(--fg)}
+.chip.solid-bad{background:var(--bad);color:var(--bg)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.chip.solid-bad{animation:pulse 2.2s ease-in-out infinite}
+.meta{display:flex;flex-wrap:wrap;gap:3px 12px;color:var(--muted);font-size:13px;margin:1px 0 4px}
+.meta span{display:inline-flex;align-items:center;gap:4px}
+.meta .late{color:var(--bad);font-weight:600}
+.photos{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin:8px -16px 2px 0;padding-right:16px;scrollbar-width:none}
+.photos::-webkit-scrollbar{display:none}
+.photo{flex:none;height:230px;aspect-ratio:4/5;max-width:100%;border-radius:10px;scroll-snap-align:start;position:relative;overflow:hidden;border:1px solid var(--line);display:grid;place-items:center}
+.photos.one .photo{height:auto;width:min(100%,420px);aspect-ratio:4/3}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .em{font-size:68px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+.photo .cap{position:absolute;left:10px;bottom:9px;right:10px;color:#fff;font-size:12px;font-weight:600;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.photo .x{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center}
+.poll{display:flex;flex-direction:column;gap:6px;margin:8px 0 2px}
+.opt{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:12px;min-height:42px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font-weight:500;width:100%}
+.opt .fill{position:absolute;inset:0 auto 0 0;background:var(--surface);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.opt.mine .fill{background:color-mix(in srgb,var(--fg) 13%,transparent)}
+.opt .lb,.opt .pc{position:relative;display:flex;align-items:center;gap:6px}
+.opt .pc{font-variant-numeric:tabular-nums;font-weight:600}
+.opt.mine{border-color:var(--fg)}
+.pm{color:var(--muted);font-size:13px}
+.quote{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0 2px;cursor:pointer}
+.quote .qh{display:flex;align-items:center;gap:6px;font-size:14px}
+.quote .qt{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:14px;margin-top:4px;white-space:pre-wrap}
+.official{border:1px solid color-mix(in srgb,var(--official) 40%,var(--line));background:color-mix(in srgb,var(--official) 7%,var(--bg));border-radius:12px;padding:10px 12px;margin:8px 0 2px}
+.official .oh{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--official);flex-wrap:wrap}
+.official .ot{margin-top:3px;font-size:14px;white-space:pre-wrap}
+.official .ot.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mine-anon{font-size:11.5px;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:1px 7px;white-space:nowrap}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:saturate(1.6) blur(18px);backdrop-filter:saturate(1.6) blur(18px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.nav .in{max-width:620px;margin:0 auto;display:flex;justify-content:space-around;height:62px;align-items:center}
+.nav button{width:60px;height:48px;display:grid;place-items:center;color:var(--muted);border-radius:12px;position:relative;transition:color .15s,transform .15s}
+.nav button:active{transform:scale(.9)}
+.nav button.on{color:var(--fg)}
+.nav .plusb{background:var(--surface);width:60px;height:44px;border-radius:12px}
+.nav .plusb:hover{color:var(--fg)}
+.dot{position:absolute;top:9px;right:17px;width:8px;height:8px;border-radius:50%;background:var(--like);border:2px solid var(--bg)}
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:40;animation:fade .2s}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;margin:0 auto;max-width:620px;background:var(--elev);border-radius:22px 22px 0 0;padding:6px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:up .3s cubic-bezier(.2,.8,.2,1);max-height:88vh;overflow:auto;box-shadow:var(--shadow)}
+.grab{width:38px;height:4px;border-radius:4px;background:var(--line);margin:6px auto 14px}
+.menu{background:var(--surface);border-radius:16px;overflow:hidden;margin-bottom:10px}
+.menu>button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:15px 16px;font-weight:600;border-bottom:1px solid var(--line);text-align:left}
+.menu>button:last-child{border-bottom:0}
+.menu>button:hover{background:color-mix(in srgb,var(--fg) 5%,transparent)}
+.menu .danger{color:var(--bad)}
+.sh-title{font-weight:700;font-size:15px;margin:0 2px 10px}
+.lbl{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:14px 2px 7px}
+.seg{display:flex;background:var(--surface);border-radius:11px;padding:3px;gap:2px}
+.seg button{flex:1;padding:8px 6px;border-radius:9px;font-weight:600;font-size:13px;color:var(--muted);transition:all .2s}
+.seg button.on{background:var(--elev);color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:10px;font-weight:600;border:1px solid var(--line);white-space:nowrap;font-size:14px}
+.btn.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.sm{height:30px;padding:0 11px;font-size:13px;border-radius:9px}
+.btn.wide{flex:1}
+.btn:disabled{opacity:.35;cursor:default}
+.toastw{position:fixed;left:0;right:0;bottom:calc(84px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;z-index:70;pointer-events:none;padding:0 16px}
+.toast{background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:14px;animation:up2 .25s cubic-bezier(.2,.8,.2,1);box-shadow:var(--shadow);max-width:100%;overflow-wrap:anywhere}
+.view{animation:slidein .26s cubic-bezier(.2,.8,.2,1)}
+@keyframes slidein{from{transform:translateX(26px);opacity:.3}to{transform:none;opacity:1}}
+@keyframes up{from{transform:translateY(100%)}to{transform:none}}
+@keyframes up2{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}}
+.livepill{position:sticky;top:calc(env(safe-area-inset-top,0px) + 108px);z-index:15;display:flex;justify-content:center;height:0}
+.livepill button{background:var(--fg);color:var(--bg);font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;box-shadow:var(--shadow);transform:translateY(8px);animation:up2 .3s;display:flex;gap:6px;align-items:center}
+/* composer */
+.comp{position:fixed;inset:0;z-index:45;background:var(--bg);display:flex;flex-direction:column;animation:up .32s cubic-bezier(.2,.8,.2,1);padding-top:env(safe-area-inset-top,0px)}
+.comp .cw{max-width:620px;width:100%;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.comp .body{flex:1;overflow:auto}
+.chead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:54px;border-bottom:1px solid var(--line)}
+.chead .cx{justify-self:start;font-size:15.5px}
+.types{display:flex;gap:6px;overflow-x:auto;padding:12px 0 4px;scrollbar-width:none}
+.types::-webkit-scrollbar{display:none}
+.tp{flex:none;display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-weight:600;font-size:13.5px;color:var(--muted);transition:all .2s}
+.tp.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tbox{border:1px solid var(--line);border-radius:14px;padding:4px 12px 12px;margin:8px 0 4px}
+.tbox .lbl{margin-top:10px}
+.cats{display:flex;flex-wrap:wrap;gap:6px}
+.cat{border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:13px;font-weight:500}
+.cat.on{border-color:var(--fg);background:var(--surface);font-weight:600}
+.locrow{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:6px}
+.inp{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 10px;font-size:14px;min-width:0}
+.hint{font-size:12.5px;color:var(--muted);margin-top:8px;display:flex;gap:6px;align-items:center}
+.seg-row{display:flex;gap:12px;padding:12px 0 0}
+.ta{width:100%;border:0;background:transparent;resize:none;outline:none;font-size:15px;line-height:1.42;padding:2px 0;min-height:24px;display:block}
+.ta::placeholder{color:var(--muted)}
+.tools{display:flex;gap:2px;margin:6px 0 4px -8px;color:var(--muted)}
+.tools button{display:flex;align-items:center;gap:5px;padding:6px 8px;border-radius:999px;font-size:12.5px;font-weight:600}
+.tools button:hover{background:var(--surface);color:var(--fg)}
+.pedit{display:flex;flex-direction:column;gap:6px;margin:6px 0}
+.pedit .r{display:flex;gap:6px;align-items:center}
+.addt{display:flex;gap:12px;align-items:center;padding:10px 0 16px;color:var(--muted);font-weight:500;width:100%}
+.addt .av{opacity:.5}
+.cfoot{border-top:1px solid var(--line);padding-block:10px calc(10px + env(safe-area-inset-bottom,0px))}
+.cfoot .cw{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sw{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:var(--muted);text-align:left}
+.sw .k{width:42px;height:25px;border-radius:999px;background:var(--line);position:relative;transition:background .2s;flex:none}
+.sw .k::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:var(--bg);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+.sw.on{color:var(--fg)}.sw.on .k{background:var(--fg)}.sw.on .k::after{transform:translateX(17px)}
+.anonhint{font-size:12.5px;color:var(--muted);background:var(--surface);border-radius:12px;padding:10px 12px;margin:4px 0 12px;display:flex;gap:8px}
+/* detail */
+.dsec{display:flex;align-items:center;justify-content:space-between;font-weight:700;padding:14px 0 6px;border-bottom:1px solid var(--line)}
+.nest{padding-left:48px}
+.replybar{position:fixed;left:0;right:0;bottom:calc(63px + env(safe-area-inset-bottom,0px));z-index:22;background:var(--bg);border-top:1px solid var(--line);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.replybar .in{max-width:588px;margin:0 auto;padding:8px 0}
+.replybar .rt{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.replybar .box{display:flex;gap:10px;align-items:center}
+.replybar input{flex:1;background:var(--surface);border:0;border-radius:999px;padding:10px 14px;min-width:0;outline:none}
+.sendb{width:38px;height:38px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center;flex:none}
+.sendb:disabled{opacity:.3}
+.adm{border:1px solid var(--line);border-radius:14px;padding:4px 12px 12px;margin:10px 0}
+.adm .ah{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13.5px;padding-top:8px}
+.stb{display:flex;flex-wrap:wrap;gap:6px}
+.stb button{border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s}
+.stb button.on.ok{background:var(--ok-bg);color:var(--ok);border-color:transparent}
+.stb button.on.warn{background:var(--warn-bg);color:var(--warn);border-color:transparent}
+.stb button.on.info{background:var(--info-bg);color:var(--info);border-color:transparent}
+.stb button.on.bad,.stb button.on.neutral{background:var(--neutral-bg);color:var(--fg);border-color:transparent}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.row input[type=date]{width:auto;padding:5px 8px}
+textarea.inp{resize:vertical;min-height:64px;line-height:1.4}
+/* profile */
+.prof{padding:14px 0 6px}
+.prof .pt{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.prof h1{font-size:23px;margin:0;line-height:1.2;text-wrap:balance}
+.prof .hd{display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap}
+.pill{font-size:11.5px;color:var(--muted);background:var(--surface);border-radius:999px;padding:3px 8px}
+.prof .bio{margin:10px 0 4px}
+.prof .fl{color:var(--muted);font-size:14px;margin:8px 0 14px}
+.prof .bt{display:flex;gap:8px}
+.democard{border:1px dashed var(--line);border-radius:14px;padding:10px 12px 12px;margin:14px 0 4px}
+.democard .dh{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.empty{color:var(--muted);text-align:center;padding:40px 16px}
+/* search & notif */
+.sbox{display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:14px;padding:0 12px;height:42px;margin:6px 0 8px}
+.sbox input{flex:1;border:0;background:transparent;outline:none;min-width:0;font-size:15px}
+.sh{font-weight:700;font-size:15px;margin:14px 0 4px}
+.urow{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.urow .ui{flex:1;min-width:0}
+.urow .un{font-weight:600;display:flex;gap:4px;align-items:center}
+.urow .us{color:var(--muted);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trow{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer;width:100%;text-align:left}
+.trow b{font-weight:600}.trow span{color:var(--muted);font-size:13.5px}
+.nrow{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start}
+.nrow .nb{position:absolute;right:-4px;bottom:-4px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;color:#fff;border:2px solid var(--bg)}
+.nrow .ntx{flex:1;min-width:0;font-size:14.5px}
+.nrow .ns{color:var(--muted);font-size:13.5px;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nrow.unread{background:linear-gradient(90deg,color-mix(in srgb,var(--link) 7%,transparent),transparent 60%)}
+.fchips{display:flex;gap:6px;overflow-x:auto;padding:8px 0 6px;scrollbar-width:none}
+.fchips button{flex:none;border:1px solid var(--line);border-radius:10px;padding:6px 14px;font-weight:600;font-size:13.5px}
+.fchips button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+/* dashboard */
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.kpi{border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi .v{font-size:27px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.15}
+.kpi .v small{font-size:14px;font-weight:600;color:var(--muted);margin-left:3px}
+.kpi .k{color:var(--muted);font-size:12.5px;font-weight:500}
+.kpi.alert .v{color:var(--bad)}
+.kpi .spark{height:4px;border-radius:4px;background:var(--surface);margin-top:9px;overflow:hidden}
+.kpi .spark i{display:block;height:100%;background:var(--ok);border-radius:4px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.panel{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px}
+.panel h3{margin:0 0 10px;font-size:14px}
+.formula{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-variant-numeric:tabular-nums;font-size:15px}
+.frac{display:inline-flex;flex-direction:column;align-items:center;line-height:1.15}
+.frac span:first-child{border-bottom:1.5px solid var(--fg);padding:0 4px 1px}
+.frac span:last-child{padding-top:1px}
+.formula b{font-size:18px}
+.fnote{color:var(--muted);font-size:12.5px;margin-top:8px}
+.brow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,2fr) auto;gap:10px;align-items:center;padding:5px 0;font-size:13.5px}
+.brow .bt{height:10px;border-radius:999px;background:var(--surface);overflow:hidden;position:relative}
+.brow .bt i{position:absolute;inset:0 auto 0 0;background:color-mix(in srgb,var(--fg) 28%,transparent);border-radius:999px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.brow .bt i.s{background:var(--ok)}
+.brow .n{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12.5px;min-width:38px;text-align:right}
+.brow .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stack{display:flex;height:12px;border-radius:999px;overflow:hidden;gap:2px}
+.stack i{display:block;height:100%;transition:flex .8s}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.tk{border-bottom:1px solid var(--line);padding:10px 0}
+.tk .th{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tk .tt{font-size:14px;margin:4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
+<script type="text/babel" data-presets="react">
+const {useState,useEffect,useMemo,useRef,useLayoutEffect,createContext,useContext}=React;
+const H=3600e3, D=24*H, KEY='tarmak-demo-v1';
+
+/* ---------- i18n ---------- */
+const I18N={
+kz:{all:'Барлығы',tab_talk:'Талқылау',tab_idea:'Ұсыныстар',tab_complaint:'Шағымдар',tab_lost:'Жоғалған заттар',
+ ty_talk:'Талқылау',ty_idea:'Ұсыныс',ty_complaint:'Шағым',ty_lost:'Жоғалған зат',
+ st_accepted:'Қабылданды',st_review:'Қаралуда',st_resolved:'Шешілді',st_rejected:'Қабылданбады',st_searching:'Іздеуде',st_found:'Табылды',st_returned:'Иесіне қайтарылды',
+ overdue:'Мерзімі өтті',deadline:'Мерзімі',noDeadline:'Мерзім қойылмаған',anon:'Анонимді қатысушы',anonSend:'Анонимді жіберу',
+ anonHint:'Атыңыз бен деректеріңіз ешкімге көрсетілмейді. Жүйе авторды тек спамнан қорғау үшін жасырын сақтайды.',
+ mineAnon:'сіз · анонимді',addThread:'Тармақ қосу',newThread:'Жаңа тред',cancel:'Бас тарту',publish:'Жариялау',
+ ph_talk:'Не жаңалық?',ph_more:'Тармақты жалғастырыңыз…',ph_idea:'Ұсынысыңызды сипаттаңыз: не өзгерту керек және неге?',ph_complaint:'Мәселені сипаттаңыз: не, қайда, қашаннан бері…',ph_lost:'Не жоғалды немесе не таптыңыз? Қай жерде?',
+ poll:'Сауалнама',option:'Нұсқа',addOption:'Нұсқа қосу',votes:'дауыс',photo:'Фото',samplePhoto:'Демо-фото',
+ location:'Орны',building:'Корпус',floor:'Қабат',room:'Аудитория',category:'Санат',flr:'-қабат',
+ c_cleaning:'Тазалық / қоқыс',c_furniture:'Жиһаз / техника',c_heat:'Жарық / жылу',c_wc:'Дәретхана',c_canteen:'Асхана',c_idea:'Ұсыныстар',c_lost:'Бюро находок',
+ b_main:'Бас корпус',b_b2:'№2 корпус',b_dorm:'Жатақхана',b_gym:'Спорт зал',
+ repost:'Репост',removeRepost:'Репостты алып тастау',quote:'Дәйексөз келтіру',share:'Бөлісу',copyLink:'Сілтемені көшіру',sendCard:'Карточканы көшіру',
+ linkCopied:'Сілтеме көшірілді',cardCopied:'Карточка мәтіні көшірілді',copyFail:'Көшіру мүмкін болмады',
+ confirm:'Растау',teacherConfirmed:'Оқытушы растады',officialReply:'Әкімшілік жауабы',repostedBy:'репост жасады',
+ search:'Іздеу',searchPh:'Жазба, #хэштег, адам, 204, #0042',people:'Адамдар',posts:'Жазбалар',rooms:'Аудиториялар',tickets:'Өтініштер',trending:'Танымал хэштегтер',
+ suggested:'Кімге жазылуға болады',noResults:'Ештеңе табылмады. Басқа сөзбен іздеп көріңіз.',postsN:'жазба',
+ activity:'Белсенділік',f_replies:'Жауаптар',f_tickets:'Өтініштер',noNotif:'Әзірге хабарлама жоқ',
+ p_threads:'Тредтер',p_replies:'Жауаптар',p_tickets:'Өтініштер',followers:'жазылушы',follow:'Жазылу',following:'Жазылдыңыз',
+ editProfile:'Профильді өңдеу',shareProfile:'Профильмен бөлісу',settings:'Баптаулар',language:'Тіл',theme:'Тақырып',
+ system:'Жүйе',light:'Жарық',dark:'Қараңғы',demoRole:'Демо-рөл · қорғауға арналған',
+ r_student:'Студент',r_teacher:'Оқытушы',r_admin:'Әкімшілік',adminPanel:'Админ-панель',reset:'Демо деректерді қалпына келтіру',resetDone:'Демо қалпына келтірілді',
+ dashboard:'Статистика',total:'Барлық өтініш',solvedPct:'Шешілген үлесі',avgT:'Орташа шешу уақыты',overdueN:'Мерзімі өткен',
+ byCat:'Санаттар бойынша',byStatus:'Мәртебе бойынша',solvedOf:'шешілді',h:'сағ',d:'күн',min:'мин',justNow:'қазір',
+ fNote:'tᵢ — өтініш жарияланғаннан «Шешілді» / «Иесіне қайтарылды» мәртебесіне дейінгі уақыт, n — шешілген өтініштер саны.',
+ adminTools:'Әкімшілік құралдары',setStatus:'Мәртебе',setDeadline:'Мерзім (SLA)',yesterday:'Кеше (тест)',
+ replyPh:'Ресми жауап мәтіні…',publishReply:'Жауапты жариялау',statusChanged:'Мәртебе жаңартылды',deadlineSet:'Мерзім белгіленді',
+ published:'Жарияланды',repostDone:'Репост жасалды',repostRemoved:'Репост алынды',deleted:'Жазба жойылды',delete:'Жою (модерация)',
+ writeReply:'Жауап жазу…',replyTo:'Жауап:',thread:'Тред',repliesH:'Жауаптар',noReplies:'Әзірге жауап жоқ. Бірінші болып жазыңыз!',
+ newPost:'жаңа жазба',f_all:'Барлығы',f_open:'Ашық',f_overdue:'Мерзімі өткен',f_closed:'Жабылған',
+ n_like:'жазбаңызды ұнатты',n_reply:'сізге жауап берді',n_repost:'жазбаңызға репост жасады',n_quote:'жазбаңызды дәйексөзбен бөлісті',n_follow:'сізге жазылды',
+ n_status:'Өтініш мәртебесі өзгерді',n_official:'Өтінішіңізге әкімшілік жауап берді',n_ticket:'Жаңа өтініш түсті',n_confirm:'шағымыңызды растады',
+ regNo:'Тіркеу нөмірі автоматты беріледі:',roleSet:'Рөл ауыстырылды:',followed:'Жазылдыңыз',unfollowed:'Жазылудан бас тарттыңыз',
+ profileSoon:'Профильді өңдеу толық нұсқада болады',college:'Ш. Уәлиханов атындағы КУ жанындағы көпсалалы колледж',
+ openAdmin:'Әкімшілік өңдеу',you:'Сіз',me_badge:'сіз',edit:'Өңдеу',selfOnly:'Анонимді жазбаларыңыз тек өзіңізге көрінеді'},
+ru:{all:'Всё',tab_talk:'Общение',tab_idea:'Предложения',tab_complaint:'Жалобы',tab_lost:'Бюро находок',
+ ty_talk:'Пост',ty_idea:'Предложение',ty_complaint:'Жалоба',ty_lost:'Потерянная вещь',
+ st_accepted:'Принято',st_review:'В работе',st_resolved:'Решено',st_rejected:'Отклонено',st_searching:'В поиске',st_found:'Найдено',st_returned:'Возвращено владельцу',
+ overdue:'Просрочено',deadline:'Срок',noDeadline:'Срок не задан',anon:'Анонимный участник',anonSend:'Отправить анонимно',
+ anonHint:'Ваше имя и данные никому не показываются. Система хранит автора скрыто, только для защиты от спама.',
+ mineAnon:'вы · анонимно',addThread:'Добавить в ветку',newThread:'Новая ветка',cancel:'Отмена',publish:'Опубликовать',
+ ph_talk:'Что нового?',ph_more:'Продолжите ветку…',ph_idea:'Опишите предложение: что изменить и зачем?',ph_complaint:'Опишите проблему: что, где, с какого времени…',ph_lost:'Что потеряли или нашли? Где?',
+ poll:'Опрос',option:'Вариант',addOption:'Добавить вариант',votes:'голосов',photo:'Фото',samplePhoto:'Демо-фото',
+ location:'Локация',building:'Корпус',floor:'Этаж',room:'Аудитория',category:'Категория',flr:' этаж',
+ c_cleaning:'Уборка / мусор',c_furniture:'Мебель / техника',c_heat:'Свет / тепло',c_wc:'Санузлы',c_canteen:'Столовая',c_idea:'Предложения',c_lost:'Бюро находок',
+ b_main:'Главный корпус',b_b2:'Корпус №2',b_dorm:'Общежитие',b_gym:'Спортзал',
+ repost:'Репост',removeRepost:'Удалить репост',quote:'Цитировать',share:'Поделиться',copyLink:'Копировать ссылку',sendCard:'Скопировать карточку',
+ linkCopied:'Ссылка скопирована',cardCopied:'Текст карточки скопирован',copyFail:'Не удалось скопировать',
+ confirm:'Подтвердить',teacherConfirmed:'Подтвердил преподаватель',officialReply:'Ответ администрации',repostedBy:'сделал(а) репост',
+ search:'Поиск',searchPh:'Посты, #хэштеги, люди, 204, #0042',people:'Люди',posts:'Посты',rooms:'Кабинеты',tickets:'Заявки',trending:'Популярные хэштеги',
+ suggested:'На кого подписаться',noResults:'Ничего не найдено. Попробуйте другой запрос.',postsN:'постов',
+ activity:'Активность',f_replies:'Ответы',f_tickets:'Заявки',noNotif:'Пока нет уведомлений',
+ p_threads:'Треды',p_replies:'Ответы',p_tickets:'Заявки',followers:'подписчиков',follow:'Подписаться',following:'Вы подписаны',
+ editProfile:'Редактировать профиль',shareProfile:'Поделиться профилем',settings:'Настройки',language:'Язык',theme:'Тема',
+ system:'Системная',light:'Светлая',dark:'Тёмная',demoRole:'Демо-роль · для защиты',
+ r_student:'Студент',r_teacher:'Преподаватель',r_admin:'Администрация',adminPanel:'Админ-панель',reset:'Сбросить демо-данные',resetDone:'Демо сброшено',
+ dashboard:'Статистика',total:'Всего заявок',solvedPct:'Доля решённых',avgT:'Среднее время решения',overdueN:'Просрочено',
+ byCat:'По категориям',byStatus:'По статусам',solvedOf:'решено',h:'ч',d:'дн',min:'мин',justNow:'сейчас',
+ fNote:'tᵢ — время от публикации заявки до статуса «Решено» / «Возвращено владельцу», n — число решённых заявок.',
+ adminTools:'Инструменты администрации',setStatus:'Статус',setDeadline:'Срок (SLA)',yesterday:'Вчера (тест)',
+ replyPh:'Текст официального ответа…',publishReply:'Опубликовать ответ',statusChanged:'Статус обновлён',deadlineSet:'Срок установлен',
+ published:'Опубликовано',repostDone:'Репост сделан',repostRemoved:'Репост удалён',deleted:'Пост удалён',delete:'Удалить (модерация)',
+ writeReply:'Напишите ответ…',replyTo:'Ответ для',thread:'Ветка',repliesH:'Ответы',noReplies:'Ответов пока нет. Напишите первым!',
+ newPost:'новый пост',f_all:'Все',f_open:'Открытые',f_overdue:'Просроченные',f_closed:'Закрытые',
+ n_like:'оценил(а) ваш пост',n_reply:'ответил(а) вам',n_repost:'сделал(а) репост вашего поста',n_quote:'процитировал(а) ваш пост',n_follow:'подписался(-ась) на вас',
+ n_status:'Статус заявки изменён',n_official:'Администрация ответила на вашу заявку',n_ticket:'Поступила новая заявка',n_confirm:'подтвердил(а) вашу жалобу',
+ regNo:'Регистрационный номер присвоится автоматически:',roleSet:'Роль переключена:',followed:'Вы подписались',unfollowed:'Вы отписались',
+ profileSoon:'Редактирование профиля будет в полной версии',college:'Многопрофильный колледж при КУ им. Ш. Уалиханова',
+ openAdmin:'Управление заявкой',you:'Вы',me_badge:'вы',edit:'Изменить',selfOnly:'Ваши анонимные посты видны только вам'}
+};
+const MONTHS={kz:['қаңтар','ақпан','наурыз','сәуір','мамыр','маусым','шілде','тамыз','қыркүйек','қазан','қараша','желтоқсан'],
+ ru:['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря']};
+
+/* ---------- reference data ---------- */
+const USERS={
+ u1:{id:'u1',name:'Айгерім Серікова',handle:'aigerim_ik923',role:'student',group:'ИК-923',hue:330,followers:214,bio:{kz:'Ақпараттық жүйелер, 3-курс. Кітапхана мен кофе 📚',ru:'Информационные системы, 3 курс. Библиотека и кофе 📚'}},
+ u2:{id:'u2',name:'Дамир Ахметов',handle:'damir.a',role:'student',group:'ПО-22',hue:205,followers:98,bio:{kz:'Болашақ бағдарламашы 💻',ru:'Будущий программист 💻'}},
+ u3:{id:'u3',name:'Мадина Жұмабай',handle:'madina_zh',role:'student',group:'ИК-923',hue:18,followers:156,bio:{kz:'Студкеңес мүшесі · волейбол 🏐',ru:'Член студсовета · волейбол 🏐'}},
+ u4:{id:'u4',name:'Артём Ким',handle:'artem.kim',role:'student',group:'ЭК-21',hue:150,followers:301,bio:{kz:'Экономика, 2-курс. Фото түсіремін 📷',ru:'Экономика, 2 курс. Фотографирую 📷'}},
+ t1:{id:'t1',name:'Ерлан Қасымов',handle:'erlan_kassymov',role:'teacher',group:{kz:'Информатика оқытушысы',ru:'Преподаватель информатики'},hue:255,followers:540,bio:{kz:'Бағдарламалау, ДҚ. Консультация — сенбі, 312.',ru:'Программирование, БД. Консультации — суббота, 312.'}},
+ t2:{id:'t2',name:'Гүлнар Төлеуова',handle:'gulnar.t',role:'teacher',group:{kz:'Физика оқытушысы',ru:'Преподаватель физики'},hue:42,followers:388,bio:{kz:'Физика — бәрі туралы ғылым ⚛️',ru:'Физика — наука обо всём ⚛️'}},
+ a1:{id:'a1',name:'Студкеңес',handle:'studkenes',role:'admin',group:{kz:'Студенттік кеңес',ru:'Студенческий совет'},hue:175,followers:1290,bio:{kz:'Студенттердің дауысы. Өтініштер 3 жұмыс күнінде қаралады.',ru:'Голос студентов. Заявки рассматриваем за 3 рабочих дня.'}},
+ a2:{id:'a2',name:'Колледж әкімшілігі',handle:'college_admin',role:'admin',group:{kz:'Ресми аккаунт',ru:'Официальный аккаунт'},hue:220,followers:2104,bio:{kz:'Ресми жаңалықтар мен хабарландырулар',ru:'Официальные новости и объявления'}},
+};
+const ROLE_USER={student:'u1',teacher:'t1',admin:'a1'};
+const CATS=['cleaning','furniture','heat','wc','canteen'];
+const ALLCATS=[...CATS,'idea','lost'];
+const TFLOW=['accepted','review','resolved','rejected'], LFLOW=['searching','found','returned'];
+const CLOSED=['resolved','returned','rejected'], SOLVED=['resolved','returned'];
+const TONE={accepted:'info',review:'warn',resolved:'ok',rejected:'neutral',searching:'warn',found:'info',returned:'ok'};
+const TONEVAR={info:'var(--info)',warn:'var(--warn)',ok:'var(--ok)',neutral:'var(--muted)'};
+const BUILD=['main','b2','dorm','gym'];
+const SC={
+ news:{g:['#1e3a8a','#0ea5e9'],e:'🎓',c:'Ашық есік күні · 25.11'},
+ ev1:{g:['#f97316','#db2777'],e:'🎤',c:'Акт залы'},
+ ev2:{g:['#7c3aed','#2563eb'],e:'🏆',c:'«Жас маман» финалы'},
+ ev3:{g:['#059669','#0891b2'],e:'👩‍💻',c:'ИК-923 командасы'},
+ cold:{g:['#475569','#38bdf8'],e:'🥶',c:'206 · +14°C'},
+ card:{g:['#334155','#0f766e'],e:'🪪',c:'Студенттік билет'},
+ umb:{g:['#111827','#6b7280'],e:'☂️',c:'108-кабинет'},
+ trash:{g:['#4d7c0f','#a16207'],e:'🗑️',c:'Аула · №2 корпус'},
+ lib:{g:['#b45309','#7c2d12'],e:'🔌',c:'Кітапхана · оқу залы'},
+ food:{g:['#ea580c','#facc15'],e:'🍛',c:'Асхана'},
+};
+const SAMPLES=[{g:['#0f766e','#22d3ee'],e:'☕',c:'Үзіліс'},{g:['#9333ea','#f472b6'],e:'🎨',c:'Арт-клуб'},{g:['#1d4ed8','#93c5fd'],e:'🏐',c:'Спорт зал'},{g:['#b91c1c','#fb923c'],e:'📢',c:'Хабарландыру'},{g:['#365314','#84cc16'],e:'🌱',c:'Субботник'}];
+
+/* ---------- seed ---------- */
+function mkPost(o){return {kind:'post',type:'talk',anon:false,text:'',images:[],poll:null,quoteId:null,parentId:null,chainOf:null,chainIdx:0,likes:0,likedBy:[],reposts:0,repostedBy:[],replyBase:0,ticket:null,...o}}
+function mkTicket(o){return {cat:'idea',loc:{b:'main',f:'1',r:''},status:'accepted',deadline:null,resolvedAt:null,confirms:0,confirmedBy:[],official:null,...o}}
+function seed(now){
+ const P=[]; const a=o=>P.push(mkPost(o)); const img=k=>({kind:'scene',...SC[k]});
+ a({id:'p_id',type:'lost',authorId:'u2',createdAt:now-5*H,likes:23,reposts:9,images:[img('card')],
+   text:'Студенттік билетім жоғалды 😢 Аты-жөні: Дамир Ахметов, ПО-22. Кеше асхана маңында түсіп қалған сияқты. Тапсаңыз, жазыңыз! #жоғалдым #асхана',
+   ticket:mkTicket({num:42,cat:'lost',loc:{b:'main',f:'1',r:'Асхана'},status:'searching'})});
+ a({id:'p_poll',authorId:'u3',createdAt:now-90*60*1000,likes:64,reposts:4,replyBase:6,
+   text:'Асханада ең дәмді не? 🍽️ Студкеңес мәзірді жаңартқысы келеді — дауыс беріңіздер! #асхана',
+   poll:{options:[{text:'Палау',base:34},{text:'Манты',base:21},{text:'Самса + шай',base:47},{text:'Үйден әкелемін 😅',base:12}],by:{}}});
+ a({id:'p_news',authorId:'a2',createdAt:now-2*H,likes:87,reposts:12,images:[img('news')],
+   text:'📣 25 қараша — «Ашық есік күні»! Мектеп оқушыларына колледжді көрсетуге еріктілер керек. Тіркелу — Студкеңес бөлмесінде (Бас корпус, 115). #ісшара #волонтер'});
+ a({id:'p_quote',authorId:'u4',createdAt:now-3*H,likes:41,reposts:3,quoteId:'p_0038',
+   text:'В 204-м так же, подтверждаю! Сидим в куртках на паре по 1С 🥶 #жылу'});
+ a({id:'p_anon',authorId:'u2',anon:true,createdAt:now-4*H,likes:132,reposts:18,
+   text:'Подслушано 👀 Говорят, на субботник в пятницу придёт сам директор, а после будет пицца для всех групп. Кто идёт? #субботник'});
+ a({id:'p_chain',authorId:'t1',createdAt:now-6*H,likes:118,reposts:27,text:'Сессияға 3 апта қалды. Дайындық бойынша 3 кеңес 🧵 #сессия #ИК923'});
+ a({id:'p_chain1',authorId:'t1',chainOf:'p_chain',chainIdx:1,createdAt:now-6*H+1,likes:54,text:'1/3 Билеттерді бүгіннен бастап бөліп алыңыз: күніне 3 сұрақ — 3 аптада бәрі бітеді.'});
+ a({id:'p_chain2',authorId:'t1',chainOf:'p_chain',chainIdx:2,createdAt:now-6*H+2,likes:49,text:'2/3 Сенбі сайын 312-аудиторияда консультация, 10:00-де. Сұрақтарды алдын ала осы тредке жазыңыз.'});
+ a({id:'p_chain3',authorId:'t1',chainOf:'p_chain',chainIdx:3,createdAt:now-6*H+3,likes:77,text:'3/3 Ұйқы — ең жақсы шпаргалка 😴 Емтихан алдында түні бойы отырмаңыз.'});
+ a({id:'p_event',authorId:'u1',createdAt:now-9*H,likes:203,reposts:15,images:[img('ev1'),img('ev2'),img('ev3')],
+   text:'Кешегі «Жас маман» #ісшара 🔥 Біздің топ 2-орын алды! Ұйымдастырғаны үшін @studkenes рахмет 💙'});
+ a({id:'p_0041',type:'complaint',authorId:'u4',anon:true,createdAt:now-26*H,likes:37,images:[img('trash')],
+   text:'№2 корпустың артындағы қоқыс жәшіктері үш күннен бері толы. Иісі терезеден кіреді, сабақта отыру қиын.',
+   ticket:mkTicket({num:41,cat:'cleaning',loc:{b:'b2',f:'1',r:'Аула'},status:'accepted',deadline:now+2*D,confirms:14})});
+ a({id:'p_0040',type:'lost',authorId:'t2',createdAt:now-2*D,likes:12,images:[img('umb')],
+   text:'108-кабинетте қара қолшатыр қалып қойыпты ☂️ Иесі — физика кафедрасына келіңіз.',
+   ticket:mkTicket({num:40,cat:'lost',loc:{b:'main',f:'1',r:'108'},status:'found'})});
+ a({id:'p_0039',type:'idea',authorId:'u1',createdAt:now-3*D,likes:156,reposts:22,images:[img('lib')],
+   text:'Ұсыныс: кітапхананың оқу залында розеткалары бар үстелдер жасайық 🔌 Сессия кезінде ноутбукты зарядтайтын жер жоқ. #ұсыныс #кітапхана',
+   ticket:mkTicket({num:39,cat:'idea',loc:{b:'main',f:'3',r:'Кітапхана'},status:'accepted',deadline:now+20*D,
+     official:{by:'a1',at:now-2*D,text:'Ұсыныс қабылданды ✅ Әкімшілікпен келісілді: желтоқсанның 10-на дейін оқу залына 6 розетка блогы орнатылады.'}})});
+ a({id:'p_0038',type:'complaint',authorId:'u3',createdAt:now-4*D,likes:98,reposts:11,images:[img('cold')],
+   text:'206-кабинетте жылу жоқ 🥶 Таңертең +14°C, сабақта күртешемен отырамыз. Батареялар мүлдем суық. #жылу',
+   ticket:mkTicket({num:38,cat:'heat',loc:{b:'main',f:'2',r:'206'},status:'review',deadline:now-1*D,confirms:22,confirmedBy:['t2']})});
+ a({id:'p_0037',type:'complaint',authorId:'u4',createdAt:now-6*D,likes:44,
+   text:'На 3 этаже в мужском туалете уже неделю не работает кран. #санузел',
+   ticket:mkTicket({num:37,cat:'wc',loc:{b:'main',f:'3',r:'WC'},status:'resolved',deadline:now-3*D,resolvedAt:now-6*D+50*H,confirms:9,
+     official:{by:'a2',at:now-6*D+50*H,text:'Кран ауыстырылды. Хабарлағаныңызға рахмет!'}})});
+ a({id:'p_0036',type:'idea',authorId:'u2',createdAt:now-8*D,likes:310,reposts:40,
+   text:'Предлагаю отменить первую пару по понедельникам 😴 #ұсыныс',
+   ticket:mkTicket({num:36,cat:'idea',status:'rejected',
+     official:{by:'a2',at:now-7*D,text:'Сабақ кестесі білім беру стандартына сай бекітілген, сондықтан өзгерту мүмкін емес. Бірақ 1-пара 8:30-дан 9:00-ге ауыстырылды.'}})});
+ a({id:'p_0035',type:'complaint',authorId:'u1',createdAt:now-10*D,likes:27,
+   text:'312-аудиторияда 4 орындық сынған, біреуі құлап кете жаздады. #жиһаз',
+   ticket:mkTicket({num:35,cat:'furniture',loc:{b:'main',f:'3',r:'312'},status:'resolved',deadline:now-7*D,resolvedAt:now-10*D+72*H,confirms:6,
+     official:{by:'a1',at:now-10*D+72*H,text:'Орындықтар жөнделді, екеуі жаңасына ауыстырылды.'}})});
+ a({id:'p_0034',type:'lost',authorId:'u3',createdAt:now-12*D,likes:19,
+   text:'Спорт залда көк AirPods қабы табылды 🎧',
+   ticket:mkTicket({num:34,cat:'lost',loc:{b:'gym',f:'1',r:'Зал'},status:'returned',resolvedAt:now-12*D+20*H})});
+ // replies
+ const r=(id,parentId,authorId,text,ago,likes=0)=>a({id,type:'reply',parentId,authorId,text,createdAt:now-ago,likes});
+ r('r1','p_poll','u1','Самса + шай — классика 😂',60*60e3,12);
+ r('r2','r1','u2','Келісемін, бірақ үзілісте кезек өте ұзын 🙃',50*60e3,4);
+ r('r3','p_poll','t1','Мен үйден әкелемін 🙂 Бірақ палау шынымен дәмді.',40*60e3,21);
+ r('r4','p_0038','t2','Растаймын, 206-да таңертең +14°. Студенттер 3 сағат бойы күртешемен отыр.',3*D,30);
+ r('r5','p_0038','u1','Ал 208-де батарея мүлдем суық, сол қабатта бірдеңе болған сияқты',2*D,8);
+ r('r6','p_id','u4','Асхана кассасына сұрап көр, табылған заттарды сонда тапсырады',4*H,5);
+ r('r7','r6','u2','Рахмет, барып көремін! 🙏',3*H,1);
+ r('r8','p_chain','u1','Рахмет, ағай! Мок-тестті қайдан аламыз?',5*H,6);
+ r('r9','r8','t1','Moodle-ге жүктедім, «ИК-923» курсында.',5*H-600e3,9);
+ r('r10','p_anon','u3','Я тоже это слышала 😂 пицца — главная мотивация',3*H,14);
+ const notifs=[
+  {id:'n1',to:'u1',type:'like',from:'u4',postId:'p_event',at:now-30*60e3,read:false},
+  {id:'n2',to:'u1',type:'reply',from:'u2',postId:'r2',at:now-50*60e3,read:false},
+  {id:'n3',to:'u1',type:'official',from:'a1',postId:'p_0039',at:now-2*D,read:true},
+  {id:'n4',to:'u1',type:'status',postId:'p_0039',status:'accepted',at:now-2*D-H,read:true},
+  {id:'n5',to:'u1',type:'follow',from:'u3',at:now-1*D,read:true},
+  {id:'n6',to:'a1',type:'ticket',postId:'p_id',from:'u2',at:now-5*H,read:false},
+  {id:'n7',to:'a1',type:'ticket',postId:'p_0041',anon:true,at:now-26*H,read:false},
+  {id:'n8',to:'t1',type:'reply',from:'u1',postId:'r8',at:now-5*H,read:false},
+  {id:'n9',to:'u3',type:'confirm',from:'t2',postId:'p_0038',at:now-3*D,read:true},
+ ];
+ return {posts:P,nextNum:43,notifs,following:['a1','a2','t1'],v:1};
+}
+const LIVE=now=>mkPost({id:'p_live',authorId:'u3',createdAt:now,text:'Кітапханада бүгін Wi‑Fi ұшып тұр 🚀 Кім бар, келіңдер, бірге #сессия-ға дайындаламыз. 3-қабат, терезе жанындағы үстел.',likes:2});
+
+/* ---------- helpers ---------- */
+const Ctx=createContext(null); const useApp=()=>useContext(Ctx);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const tog=(arr,v)=>arr.includes(v)?arr.filter(x=>x!==v):[...arr,v];
+const pad=n=>'#'+String(n).padStart(4,'0');
+const loadState=()=>{try{const s=JSON.parse(localStorage.getItem(KEY)||'null');return s&&s.v===1?s:null}catch(e){return null}};
+const saveState=s=>{try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}};
+const fmtDate=(ts,lang)=>{const d=new Date(ts);return d.getDate()+' '+MONTHS[lang][d.getMonth()]};
+const isOver=(tk,now)=>tk&&tk.deadline&&now>tk.deadline&&!CLOSED.includes(tk.status);
+function copyText(s){try{return navigator.clipboard.writeText(s).then(()=>true,()=>false)}catch(e){return Promise.resolve(false)}}
+function downscale(file){return new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const m=1080,k=Math.min(1,m/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);try{res(c.toDataURL('image/jpeg',.8))}catch(e){res(r.result)}};im.onerror=()=>res(r.result);im.src=r.result};r.readAsDataURL(file)})}
+
+/* ---------- icons (lucide-style paths) ---------- */
+const IC={
+ home:'<path d="m3 9.5 9-7 9 7V20a2 2 0 0 1-2 2h-4v-7H9v7H5a2 2 0 0 1-2-2z"/>',
+ search:'<circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.4-4.4"/>',
+ heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
+ user:'<circle cx="12" cy="8" r="4.5"/><path d="M20 21a8 8 0 0 0-16 0"/>',
+ msg:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+ repeat:'<path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/>',
+ send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+ dots:'<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>',
+ plus:'<path d="M5 12h14"/><path d="M12 5v14"/>',
+ x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+ back:'<path d="m15 18-6-6 6-6"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+ clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+ alert:'<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+ image:'<rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+ poll:'<path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>',
+ hash:'<path d="M4 9h16"/><path d="M4 15h16"/><path d="M10 3 8 21"/><path d="M16 3l-2 18"/>',
+ copy:'<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+ quote:'<path d="M17 6.1H3"/><path d="M21 12.1H3"/><path d="M15.1 18H3"/>',
+ pinned:'<path d="M12 17v5"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>',
+ shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+ thumb:'<path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/>',
+ menu:'<path d="M4 9h16"/><path d="M4 15h10"/>',
+ moon:'<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+ eyeoff:'<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.53 13.53 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><path d="M2 2l20 20"/>',
+ dash:'<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>',
+ bulb:'<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+ box:'<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+ mega:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+ chat:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+ link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+ trash:'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+ reset:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
+ sparkle:'<path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/>',
+ globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20 15.3 15.3 0 0 1 0-20"/>',
+ logo:'<path d="M12 22V10"/><path d="M12 14c0-4.2 3.2-6.8 7.5-6.8"/><path d="M12 10c0-3.6-2.7-6-6.5-6"/><circle cx="19.5" cy="7.2" r="1.3" fill="currentColor"/><circle cx="5.5" cy="4" r="1.3" fill="currentColor"/>',
+};
+function Icon({n,s=22,sw=1.9,fill='none',style,className}){return <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" dangerouslySetInnerHTML={{__html:IC[n]}}/>}
+function VBadge({role,s=15}){if(role!=='teacher'&&role!=='admin')return null;const c=role==='teacher'?'var(--verified)':'var(--official)';
+ return <svg width={s} height={s} viewBox="0 0 24 24" aria-label="verified" style={{flex:'none'}}><path fill={c} d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m8.5 12 2.4 2.4 4.6-4.8" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+
+/* ---------- small components ---------- */
+function Avatar({uid:id,anon,size=36,plus}){
+ const {go,act}=useApp();
+ if(anon||!id) return <div className="av anon" style={{width:size,height:size}}><Icon n="eyeoff" s={size*.48}/></div>;
+ const u=USERS[id]; const ini=u.name.split(' ').map(w=>w[0]).slice(0,2).join('');
+ return <div className="av" role="link" tabIndex={0} aria-label={u.name} onClick={e=>{e.stopPropagation();go.profile(id)}}
+  style={{width:size,height:size,fontSize:size*.36,background:`linear-gradient(140deg,hsl(${u.hue} 72% 62%),hsl(${(u.hue+38)%360} 66% 44%))`}}>
+  {u.role==='admin'?<Icon n="logo" s={size*.55} sw={2.4}/>:ini}
+  {plus&&<button className="plus" aria-label="follow" onClick={e=>{e.stopPropagation();act.follow(id)}}><Icon n="plus" s={11} sw={3.2}/></button>}
+ </div>;
+}
+function useAgo(){const {t,lang,now}=useApp();return ts=>{const s=(now-ts)/1000;if(s<60)return t('justNow');const m=s/60;if(m<60)return Math.floor(m)+' '+t('min');const h=m/60;if(h<24)return Math.floor(h)+' '+t('h');const d=h/24;if(d<7)return Math.floor(d)+' '+t('d');return fmtDate(ts,lang)}}
+function RichText({text}){
+ const {go}=useApp();
+ const parts=(text||'').split(/(#[\p{L}\p{N}_]+|@[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)*)/u);
+ return <>{parts.map((p,i)=>i%2===1?<a key={i} className="tag" role="link" tabIndex={0} onClick={e=>{e.stopPropagation();p[0]==='#'?go.search(p):go.handle(p.slice(1))}}>{p}</a>:p)}</>;
+}
+function Photos({images,onRemove}){
+ if(!images||!images.length) return null;
+ return <div className={'photos'+(images.length===1?' one':'')} onClick={e=>e.stopPropagation()}>
+  {images.map((im,i)=><div key={i} className="photo" style={im.kind==='scene'?{background:`linear-gradient(150deg,${im.g[0]},${im.g[1]})`}:null}>
+   {im.kind==='img'?<img src={im.src} alt=""/>:<><span className="em">{im.e}</span><span className="cap">{im.c}</span></>}
+   {onRemove&&<button className="x" aria-label="remove" onClick={()=>onRemove(i)}><Icon n="x" s={14} sw={2.6}/></button>}
+  </div>)}
+ </div>;
+}
+function Poll({post}){
+ const {me,act,t}=useApp(); const by=post.poll.by||{}; const mine=by[me.id];
+ const counts=post.poll.options.map((o,i)=>o.base+Object.values(by).filter(v=>v===i).length);
+ const total=counts.reduce((a,b)=>a+b,0); const voted=mine!==undefined; const max=Math.max(...counts);
+ return <div className="poll" onClick={e=>e.stopPropagation()}>
+  {post.poll.options.map((o,i)=>{const pct=total?Math.round(counts[i]/total*100):0;
+   return <button key={i} className={'opt'+(mine===i?' mine':'')} onClick={()=>act.vote(post.id,i)} aria-pressed={mine===i}>
+    <span className="fill" style={{width:voted?pct+'%':'0%'}}/>
+    <span className="lb" style={{fontWeight:voted&&counts[i]===max?700:500}}>{o.text}{mine===i&&<Icon n="check" s={16} sw={2.6}/>}</span>
+    {voted&&<span className="pc">{pct}%</span>}
+   </button>})}
+  <div className="pm">{total} {t('votes')}</div>
+ </div>;
+}
+function TicketMeta({post,full}){
+ const {t,lang,now}=useApp(); const tk=post.ticket; if(!tk) return null;
+ const over=isOver(tk,now); const teacher=tk.confirmedBy.some(id=>USERS[id]&&USERS[id].role==='teacher');
+ const ic={idea:'bulb',complaint:'mega',lost:'box'}[post.type];
+ const loc=[t('b_'+tk.loc.b),tk.loc.f?(lang==='kz'?tk.loc.f+t('flr'):tk.loc.f+t('flr')):null,tk.loc.r||null].filter(Boolean).join(' · ');
+ return <>
+  <div className="chips">
+   <span className="chip num"><Icon n={ic} s={13} sw={2.2}/>{pad(tk.num)} · {post.type==='complaint'?t('c_'+tk.cat):t('ty_'+post.type)}</span>
+   <span className={'chip '+TONE[tk.status]}>{tk.status==='resolved'||tk.status==='returned'?<Icon n="check" s={12} sw={3}/>:null}{t('st_'+tk.status)}</span>
+   {over&&<span className="chip solid-bad"><Icon n="alert" s={12} sw={2.6}/>{t('overdue')}</span>}
+   {teacher&&<span className="chip info"><Icon n="shield" s={12} sw={2.4}/>{t('teacherConfirmed')}</span>}
+  </div>
+  <div className="meta">
+   <span><Icon n="pin" s={13}/>{loc}</span>
+   {(tk.deadline||full)&&!CLOSED.includes(tk.status)&&<span className={over?'late':''}><Icon n="clock" s={13}/>{tk.deadline?t('deadline')+': '+fmtDate(tk.deadline,lang):t('noDeadline')}</span>}
+  </div>
+ </>;
+}
+function Official({tk,clamp}){
+ const {t,lang}=useApp(); if(!tk||!tk.official) return null; const u=USERS[tk.official.by];
+ return <div className="official" onClick={e=>clamp?null:e.stopPropagation()}>
+  <div className="oh"><Icon n="pinned" s={13} sw={2.2}/>{t('officialReply')} · {u.name}<VBadge role="admin" s={13}/><span style={{color:'var(--muted)',fontWeight:500}}>· {fmtDate(tk.official.at,lang)}</span></div>
+  <div className={'ot'+(clamp?' clamp':'')}>{tk.official.text}</div>
+ </div>;
+}
+function QuoteCard({id}){
+ const {posts,go,t}=useApp(); const q=posts.find(p=>p.id===id); const ago=useAgo();
+ if(!q) return <div className="quote" style={{color:'var(--muted)'}}>—</div>;
+ const u=USERS[q.authorId];
+ return <div className="quote" onClick={e=>{e.stopPropagation();go.post(q.id)}}>
+  <div className="qh"><Avatar uid={q.authorId} anon={q.anon} size={20}/><b style={{fontWeight:600}}>{q.anon?t('anon'):u.name}</b>{!q.anon&&<VBadge role={u.role} s={13}/>}<span className="time">{ago(q.createdAt)}</span></div>
+  {q.ticket&&<div className="chips"><span className="chip num">{pad(q.ticket.num)}</span><span className={'chip '+TONE[q.ticket.status]}>{t('st_'+q.ticket.status)}</span></div>}
+  <div className="qt">{q.text}</div>
+ </div>;
+}
+function Actions({post}){
+ const {me,act,posts,t,go,setSheet}=useApp();
+ const liked=post.likedBy.includes(me.id), reposted=post.repostedBy.includes(me.id);
+ const nLikes=post.likes+post.likedBy.length, nRep=post.reposts+post.repostedBy.length;
+ const nReplies=post.replyBase+posts.filter(p=>p.parentId===post.id).length;
+ const tk=post.ticket; const confirmed=tk&&tk.confirmedBy.includes(me.id);
+ const [k,setK]=useState(0);
+ const stop=fn=>e=>{e.stopPropagation();fn()};
+ return <div className="acts">
+  <button className={'act'+(liked?' liked':'')+(k&&liked?' pop':'')} key={'l'+k} aria-pressed={liked} aria-label="like" onClick={stop(()=>{setK(x=>x+1);act.like(post.id)})}>
+   <Icon n="heart" s={20} fill={liked?'currentColor':'none'}/>{nLikes>0&&<span>{nLikes}</span>}</button>
+  <button className="act" aria-label="reply" onClick={stop(()=>go.post(post.id,{focus:true}))}><Icon n="msg" s={20}/>{nReplies>0&&<span>{nReplies}</span>}</button>
+  <button className={'act'+(reposted?' reposted spin':'')} aria-label="repost" onClick={stop(()=>setSheet({kind:'repost',id:post.id}))}><Icon n="repeat" s={20}/>{nRep>0&&<span>{nRep}</span>}</button>
+  <button className="act" aria-label="share" onClick={stop(()=>setSheet({kind:'share',id:post.id}))}><Icon n="send" s={19}/></button>
+  {post.type==='complaint'&&tk&&<button className={'act conf'+(confirmed?' on':'')} aria-pressed={confirmed} onClick={stop(()=>act.confirm(post.id))}>
+   <Icon n={me.role==='teacher'?'shield':'thumb'} s={15} sw={2.1}/>{t('confirm')} · {tk.confirms+tk.confirmedBy.length}</button>}
+ </div>;
+}
+function PostCard({post,line,isStatic,onReplyClick}){
+ const {go,t,me,following,setSheet}=useApp(); const ago=useAgo(); const u=USERS[post.authorId];
+ const showPlus=!post.anon&&post.authorId!==me.id&&!following.includes(post.authorId);
+ return <article className={'post'+(isStatic?' static':'')} onClick={()=>!isStatic&&go.post(post.id)}>
+  <div className="rail"><Avatar uid={post.authorId} anon={post.anon} plus={showPlus}/>{line&&<div className="line"/>}</div>
+  <div className="main">
+   <div className="ph">
+    <span className={'name'+(post.anon?'':' link')} onClick={e=>{if(!post.anon){e.stopPropagation();go.profile(post.authorId)}}}>{post.anon?t('anon'):u.name}</span>
+    {!post.anon&&<VBadge role={u.role}/>}
+    {post.anon&&post.authorId===me.id&&<span className="mine-anon">{t('mineAnon')}</span>}
+    <span className="time">{ago(post.createdAt)}</span>
+    <button className="more" aria-label="more" onClick={e=>{e.stopPropagation();setSheet({kind:'more',id:post.id})}}><Icon n="dots" s={20} sw={2.4}/></button>
+   </div>
+   {post.chainOf==null&&<TicketMeta post={post} full={isStatic}/>}
+   {post.text&&<div className="txt"><RichText text={post.text}/></div>}
+   <Photos images={post.images}/>
+   {post.poll&&<Poll post={post}/>}
+   {post.quoteId&&<QuoteCard id={post.quoteId}/>}
+   {post.ticket&&!isStatic&&<Official tk={post.ticket} clamp/>}
+   {onReplyClick?<ReplyActions post={post} onReply={onReplyClick}/>:<Actions post={post}/>}
+  </div>
+ </article>;
+}
+function ReplyActions({post,onReply}){
+ const {me,act}=useApp(); const liked=post.likedBy.includes(me.id); const [k,setK]=useState(0);
+ return <div className="acts">
+  <button key={k} className={'act'+(liked?' liked':'')+(k&&liked?' pop':'')} onClick={e=>{e.stopPropagation();setK(x=>x+1);act.like(post.id)}}><Icon n="heart" s={18} fill={liked?'currentColor':'none'}/>{post.likes+post.likedBy.length>0&&<span>{post.likes+post.likedBy.length}</span>}</button>
+  <button className="act" onClick={e=>{e.stopPropagation();onReply(post)}}><Icon n="msg" s={18}/></button>
+ </div>;
+}
+function ThreadBlock({head,isStatic}){
+ const {posts}=useApp();
+ const chain=posts.filter(p=>p.chainOf===head.id).sort((a,b)=>a.chainIdx-b.chainIdx);
+ const all=[head,...chain];
+ return <>{all.map((p,i)=><PostCard key={p.id} post={p} line={i<all.length-1} isStatic={isStatic}/>)}</>;
+}
+function FeedItem({p}){
+ const {posts,t}=useApp();
+ if(p.kind==='repost'){const o=posts.find(x=>x.id===p.repostOf); if(!o) return null;
+  return <div className="item"><div className="rph"><Icon n="repeat" s={14} sw={2.2}/>{USERS[p.authorId].name} {t('repostedBy')}</div><ThreadBlock head={o}/></div>}
+ return <div className="item"><ThreadBlock head={p}/></div>;
+}
+
+/* ---------- views ---------- */
+function Feed(){
+ const {posts,t,feedTab,setFeedTab,pending,acceptPending,lang,setLang,themePref,setThemePref,role,go}=useApp();
+ const top=posts.filter(p=>!p.parentId&&!p.chainOf);
+ const items=(feedTab==='all'?top:top.filter(p=>p.kind!=='repost'&&p.type===feedTab)).sort((a,b)=>b.createdAt-a.createdAt);
+ const dark=themePref==='dark'||(themePref==='system'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches&&document.documentElement.dataset.theme!=='light')||document.documentElement.dataset.theme==='dark';
+ return <div>
+  <div className="top">
+   <div className="bar">
+    <div className="l">
+     <button className="ib" aria-label="theme" onClick={()=>setThemePref(dark?'light':'dark')}><Icon n={dark?'sun':'moon'} s={21}/></button>
+     {role==='admin'&&<button className="ib" aria-label={t('adminPanel')} onClick={go.admin}><Icon n="dash" s={21}/></button>}
+    </div>
+    <div className="logo" title="Тармақ"><Icon n="logo" s={30} sw={2.3}/></div>
+    <div className="r"><div className="lang" role="group" aria-label="language"><button className={lang==='kz'?'on':''} onClick={()=>setLang('kz')}>ҚАЗ</button><button className={lang==='ru'?'on':''} onClick={()=>setLang('ru')}>РУС</button></div></div>
+   </div>
+   <nav className="tabs">{['all','talk','idea','complaint','lost'].map(k=><button key={k} className={feedTab===k?'on':''} onClick={()=>setFeedTab(k)}>{k==='all'?t('all'):t('tab_'+k)}</button>)}</nav>
+  </div>
+  {pending&&<div className="livepill"><button onClick={acceptPending}><Icon n="sparkle" s={14} sw={2.2}/>1 {t('newPost')}</button></div>}
+  {items.map(p=><FeedItem key={p.id} p={p}/>)}
+  {!items.length&&<div className="empty">—</div>}
+ </div>;
+}
+function SubBar({title,right}){const {go}=useApp();return <div className="top"><div className="bar"><div className="l"><button className="ib" aria-label="back" onClick={go.back}><Icon n="back" s={24}/></button></div><div className="title">{title}</div><div className="r">{right}</div></div></div>}
+
+function PostDetail({id,focus}){
+ const {posts,t,me,act,role}=useApp();
+ const p0=posts.find(p=>p.id===id);
+ const [replyTo,setReplyTo]=useState(null); const [txt,setTxt]=useState(''); const inRef=useRef();
+ useEffect(()=>{if(focus&&inRef.current)setTimeout(()=>inRef.current&&inRef.current.focus(),300)},[]);
+ if(!p0) return <div><SubBar title={t('thread')}/><div className="empty">—</div></div>;
+ const head=p0.chainOf?posts.find(p=>p.id===p0.chainOf):p0;
+ const ids=[head.id,...posts.filter(p=>p.chainOf===head.id).map(p=>p.id)];
+ const roots=posts.filter(p=>ids.includes(p.parentId)).sort((a,b)=>a.createdAt-b.createdAt);
+ const kids=pid=>posts.filter(p=>p.parentId===pid).sort((a,b)=>a.createdAt-b.createdAt);
+ const Tree=({r})=>{const c=kids(r.id);return <div><PostCard post={r} line={c.length>0} isStatic onReplyClick={x=>{setReplyTo(x);inRef.current&&inRef.current.focus()}}/>{c.length>0&&<div className="nest">{c.map(x=><Tree key={x.id} r={x}/>)}</div>}</div>};
+ const target=replyTo||head; const tu=USERS[target.authorId];
+ const send=()=>{if(!txt.trim())return;act.reply(target.id,txt.trim());setTxt('');setReplyTo(null)};
+ return <div className="view" style={{paddingBottom:110}}>
+  <SubBar title={t('thread')}/>
+  <div style={{borderBottom:'1px solid var(--line)'}}><ThreadBlock head={head} isStatic/></div>
+  {head.ticket&&<Official tk={head.ticket}/>}
+  {head.ticket&&role==='admin'&&<TicketAdmin post={head}/>}
+  <div className="dsec"><span>{t('repliesH')}</span><span className="pm">{roots.length+head.replyBase}</span></div>
+  {roots.map(r=><div key={r.id} style={{borderBottom:'1px solid var(--line)'}}><Tree r={r}/></div>)}
+  {!roots.length&&<div className="empty">{t('noReplies')}</div>}
+  <div className="replybar"><div className="in">
+   {replyTo&&<div className="rt">{t('replyTo')} <b>{replyTo.anon?t('anon'):'@'+tu.handle}</b><button className="ib" style={{width:24,height:24}} onClick={()=>setReplyTo(null)} aria-label="cancel"><Icon n="x" s={14}/></button></div>}
+   <div className="box"><Avatar uid={me.id} size={32}/><input id="replyInput" ref={inRef} value={txt} onChange={e=>setTxt(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send()} placeholder={t('writeReply')}/><button className="sendb" disabled={!txt.trim()} onClick={send} aria-label="send"><Icon n="send" s={17} sw={2.2}/></button></div>
+  </div></div>
+ </div>;
+}
+
+function TicketAdmin({post}){
+ const {t,act,lang,now}=useApp(); const tk=post.ticket; const flow=post.type==='lost'?LFLOW:TFLOW;
+ const [txt,setTxt]=useState(tk.official?tk.official.text:'');
+ const dv=tk.deadline?new Date(tk.deadline-new Date(tk.deadline).getTimezoneOffset()*60e3).toISOString().slice(0,10):'';
+ return <div className="adm" onClick={e=>e.stopPropagation()}>
+  <div className="ah"><Icon n="shield" s={16} sw={2.2}/>{t('adminTools')} · {pad(tk.num)}</div>
+  <span className="lbl">{t('setStatus')}</span>
+  <div className="stb">{flow.map(s=><button key={s} className={(tk.status===s?'on ':'')+TONE[s]} onClick={()=>act.setStatus(post.id,s)}>{t('st_'+s)}</button>)}</div>
+  {post.type!=='lost'&&<><span className="lbl">{t('setDeadline')} · <span style={{textTransform:'none',letterSpacing:0,color:isOver(tk,now)?'var(--bad)':'var(--fg)'}}>{tk.deadline?fmtDate(tk.deadline,lang):t('noDeadline')}</span></span>
+  <div className="row">{[1,3,7].map(d=><button key={d} className="btn sm" onClick={()=>act.setDeadline(post.id,now+d*D)}>+{d} {t('d')}</button>)}
+   <button className="btn sm" onClick={()=>act.setDeadline(post.id,now-D)}>{t('yesterday')}</button>
+   <input className="inp" type="date" id={'dl-'+post.id} value={dv} onChange={e=>e.target.value&&act.setDeadline(post.id,new Date(e.target.value+'T18:00').getTime())}/></div></>}
+  <span className="lbl">{t('officialReply')}</span>
+  <textarea className="inp" id={'or-'+post.id} value={txt} onChange={e=>setTxt(e.target.value)} placeholder={t('replyPh')}/>
+  <div className="row" style={{marginTop:8,justifyContent:'flex-end'}}><button className="btn pri sm" disabled={!txt.trim()} onClick={()=>act.setOfficial(post.id,txt.trim())}><Icon n="pinned" s={14} sw={2.2}/>{t('publishReply')}</button></div>
+ </div>;
+}
+
+function Composer({init,onClose}){
+ const {t,me,act,nextNum}=useApp();
+ const [d,setD]=useState({type:init.type||'talk',cat:'heat',loc:{b:'main',f:'2',r:''},anon:false,segs:[{text:'',images:[],poll:null}],quoteId:init.quoteId||null});
+ const fileRef=useRef(); const tgt=useRef(0); const taRefs=useRef([]);
+ const mapSeg=(i,fn)=>setD(x=>({...x,segs:x.segs.map((s,j)=>j===i?fn(s):s)}));
+ const isT=d.type!=='talk';
+ const onFiles=async e=>{const i=tgt.current;const fs=Array.from(e.target.files||[]).slice(0,4);e.target.value='';for(const f of fs){const src=await downscale(f);mapSeg(i,s=>({...s,images:[...s.images,{kind:'img',src}]}))}};
+ const valid=d.segs.some(s=>s.text.trim()||s.images.length)&&d.segs.every(s=>!s.poll||s.poll.options.filter(o=>o.trim()).length>=2);
+ const grow=el=>{if(!el)return;el.style.height='auto';el.style.height=el.scrollHeight+'px'};
+ useEffect(()=>{taRefs.current[0]&&taRefs.current[0].focus()},[]);
+ const types=[['talk','chat'],['idea','bulb'],['complaint','mega'],['lost','box']];
+ return <div className="comp" role="dialog" aria-modal="true">
+  <div className="cw"><div className="chead"><button className="cx" onClick={onClose}>{t('cancel')}</button><div className="title">{t('newThread')}</div><div/></div></div>
+  <div className="body"><div className="cw">
+   <div className="types">{types.map(([k,ic])=><button key={k} className={'tp'+(d.type===k?' on':'')} onClick={()=>setD(x=>({...x,type:k}))}><Icon n={ic} s={15} sw={2.1}/>{t('ty_'+k)}</button>)}</div>
+   {isT&&<div className="tbox">
+    {d.type==='complaint'&&<><span className="lbl">{t('category')}</span><div className="cats">{CATS.map(c=><button key={c} className={'cat'+(d.cat===c?' on':'')} onClick={()=>setD(x=>({...x,cat:c}))}>{t('c_'+c)}</button>)}</div></>}
+    <span className="lbl">{t('location')}</span>
+    <div className="locrow">
+     <select className="inp" id="locB" aria-label={t('building')} value={d.loc.b} onChange={e=>setD(x=>({...x,loc:{...x.loc,b:e.target.value}}))}>{BUILD.map(b=><option key={b} value={b}>{t('b_'+b)}</option>)}</select>
+     <select className="inp" id="locF" aria-label={t('floor')} value={d.loc.f} onChange={e=>setD(x=>({...x,loc:{...x.loc,f:e.target.value}}))}>{['1','2','3','4'].map(f=><option key={f} value={f}>{f}{t('flr')}</option>)}</select>
+     <input className="inp" id="locR" placeholder={t('room')} value={d.loc.r} onChange={e=>setD(x=>({...x,loc:{...x.loc,r:e.target.value}}))}/>
+    </div>
+    <div className="hint"><Icon n="hash" s={14}/>{t('regNo')} <b style={{color:'var(--fg)'}}>{pad(nextNum)}</b></div>
+   </div>}
+   {d.segs.map((s,i)=><div key={i} className="seg-row">
+    <div className="rail"><Avatar uid={d.anon?null:me.id} anon={d.anon}/><div className="line"/></div>
+    <div className="main">
+     <div className="ph"><span className="name">{d.anon?t('anon'):me.name}</span>{i>0&&<button className="more" aria-label="remove" onClick={()=>setD(x=>({...x,segs:x.segs.filter((_,j)=>j!==i)}))}><Icon n="x" s={16}/></button>}</div>
+     <textarea ref={el=>taRefs.current[i]=el} id={'seg-'+i} className="ta" rows={1} value={s.text} placeholder={i>0?t('ph_more'):t('ph_'+d.type)} onChange={e=>{grow(e.target);mapSeg(i,x=>({...x,text:e.target.value}))}}/>
+     <Photos images={s.images} onRemove={k=>mapSeg(i,x=>({...x,images:x.images.filter((_,j)=>j!==k)}))}/>
+     {s.poll&&<div className="pedit">{s.poll.options.map((o,k)=><div key={k} className="r">
+      <input className="inp" id={'po-'+i+'-'+k} placeholder={t('option')+' '+(k+1)} value={o} onChange={e=>mapSeg(i,x=>({...x,poll:{options:x.poll.options.map((v,j)=>j===k?e.target.value:v)}}))}/>
+      {k>=2&&<button className="ib" aria-label="remove" onClick={()=>mapSeg(i,x=>({...x,poll:{options:x.poll.options.filter((_,j)=>j!==k)}}))}><Icon n="x" s={16}/></button>}</div>)}
+      {s.poll.options.length<4&&<button className="btn sm" style={{alignSelf:'flex-start'}} onClick={()=>mapSeg(i,x=>({...x,poll:{options:[...x.poll.options,'']}}))}><Icon n="plus" s={14}/>{t('addOption')}</button>}
+     </div>}
+     {i===0&&d.quoteId&&<QuoteCard id={d.quoteId}/>}
+     <div className="tools">
+      <button onClick={()=>{tgt.current=i;fileRef.current.click()}} aria-label={t('photo')}><Icon n="image" s={19}/></button>
+      <button onClick={()=>mapSeg(i,x=>({...x,images:[...x.images,{kind:'scene',...SAMPLES[(x.images.length+i)%SAMPLES.length]}]}))}><Icon n="sparkle" s={17}/>{t('samplePhoto')}</button>
+      <button onClick={()=>mapSeg(i,x=>({...x,poll:x.poll?null:{options:['','']}}))} style={s.poll?{color:'var(--fg)'}:null}><Icon n="poll" s={19}/>{t('poll')}</button>
+      <button onClick={()=>{mapSeg(i,x=>({...x,text:x.text+(x.text&&!x.text.endsWith(' ')?' #':'#')}));setTimeout(()=>taRefs.current[i]&&taRefs.current[i].focus(),0)}} aria-label="hashtag"><Icon n="hash" s={18}/></button>
+     </div>
+    </div>
+   </div>)}
+   <button className="addt" onClick={()=>{setD(x=>({...x,segs:[...x.segs,{text:'',images:[],poll:null}]}));setTimeout(()=>{const a=taRefs.current[d.segs.length];a&&a.focus()},50)}}>
+    <div className="rail"><Avatar uid={d.anon?null:me.id} anon={d.anon} size={20}/></div><span>{t('addThread')}</span></button>
+   {d.anon&&<div className="anonhint"><Icon n="eyeoff" s={16}/><span>{t('anonHint')}</span></div>}
+   <input ref={fileRef} type="file" accept="image/*" multiple hidden onChange={onFiles}/>
+  </div></div>
+  <div className="cfoot"><div className="cw">
+   <button className={'sw'+(d.anon?' on':'')} role="switch" aria-checked={d.anon} onClick={()=>setD(x=>({...x,anon:!x.anon}))}><span className="k"/>{t('anonSend')}</button>
+   <button className="btn pri" disabled={!valid} onClick={()=>act.publish(d)}>{t('publish')}</button>
+  </div></div>
+ </div>;
+}
+
+function Search(){
+ const {posts,query,setQuery,t,go,me,following,act}=useApp();
+ const q=query.trim(), ql=q.toLowerCase().replace(/^@/,'');
+ const top=posts.filter(p=>p.kind==='post'&&p.type!=='reply');
+ const res=useMemo(()=>{if(!q)return null;
+  const num=/^#?\d{1,4}$/.test(q)?parseInt(q.replace('#',''),10):null;
+  const tickets=num!=null?top.filter(p=>p.ticket&&p.ticket.num===num):[];
+  const rooms=num!=null||/^\d{2,4}$/.test(q)?top.filter(p=>p.ticket&&(p.ticket.loc.r||'').toLowerCase().includes(q.replace('#','').toLowerCase())&&!tickets.includes(p)):[];
+  const people=Object.values(USERS).filter(u=>u.name.toLowerCase().includes(ql)||u.handle.toLowerCase().includes(ql));
+  const ps=top.filter(p=>!tickets.includes(p)&&!rooms.includes(p)&&p.text.toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b.createdAt-a.createdAt);
+  return {tickets,rooms,people,ps};
+ },[q,posts]);
+ const tags=useMemo(()=>{const m={};posts.forEach(p=>(p.text.match(/#[\p{L}_][\p{L}\p{N}_]*/gu)||[]).forEach(h=>{const k=h.toLowerCase();m[k]=(m[k]||0)+1}));return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,8)},[posts]);
+ const URow=({u})=><div className="urow" onClick={()=>go.profile(u.id)}><Avatar uid={u.id}/><div className="ui"><div className="un">{u.name}<VBadge role={u.role} s={14}/></div><div className="us">@{u.handle} · {typeof u.group==='object'?u.group[useApp().lang]:u.group}</div></div>
+  {u.id!==me.id&&<button className={'btn sm'+(following.includes(u.id)?'':' pri')} onClick={e=>{e.stopPropagation();act.follow(u.id)}}>{following.includes(u.id)?t('following'):t('follow')}</button>}</div>;
+ return <div className="view">
+  <div className="top" style={{paddingTop:8}}><div className="title" style={{fontSize:26,padding:'6px 0 2px'}}>{t('search')}</div>
+   <div className="sbox"><Icon n="search" s={18}/><input id="searchInput" value={query} onChange={e=>setQuery(e.target.value)} placeholder={t('searchPh')} autoComplete="off"/>{query&&<button onClick={()=>setQuery('')} aria-label="clear"><Icon n="x" s={16}/></button>}</div></div>
+  {!res&&<><div className="sh">{t('trending')}</div>{tags.map(([h,n])=><button key={h} className="trow" onClick={()=>setQuery(h)}><b>{h}</b><span>{n} {t('postsN')}</span></button>)}
+   <div className="sh">{t('suggested')}</div>{Object.values(USERS).filter(u=>u.id!==me.id).slice(0,5).map(u=><URow key={u.id} u={u}/>)}</>}
+  {res&&<>
+   {res.tickets.length>0&&<><div className="sh">{t('tickets')}</div>{res.tickets.map(p=><div key={p.id} className="item"><ThreadBlock head={p}/></div>)}</>}
+   {res.rooms.length>0&&<><div className="sh">{t('rooms')}</div>{res.rooms.map(p=><div key={p.id} className="item"><ThreadBlock head={p}/></div>)}</>}
+   {res.people.length>0&&<><div className="sh">{t('people')}</div>{res.people.map(u=><URow key={u.id} u={u}/>)}</>}
+   {res.ps.length>0&&<><div className="sh">{t('posts')}</div>{res.ps.map(p=><div key={p.id} className="item"><PostCard post={p}/></div>)}</>}
+   {!res.tickets.length&&!res.rooms.length&&!res.people.length&&!res.ps.length&&<div className="empty">{t('noResults')}</div>}
+  </>}
+ </div>;
+}
+
+function Notifs(){
+ const {notifs,me,t,go,posts,markRead}=useApp(); const ago=useAgo(); const [f,setF]=useState('all');
+ useEffect(()=>()=>markRead(),[]);
+ const mine=notifs.filter(n=>n.to===me.id).filter(n=>f==='all'||(f==='replies'?n.type==='reply':['status','official','ticket','confirm'].includes(n.type))).sort((a,b)=>b.at-a.at);
+ const BADGE={like:['heart','var(--like)'],reply:['msg','var(--link)'],repost:['repeat','var(--ok)'],quote:['quote','var(--ok)'],follow:['user','#7c3aed'],status:['clock','var(--warn)'],official:['pinned','var(--official)'],ticket:['mega','var(--warn)'],confirm:['shield','var(--info)']};
+ return <div className="view">
+  <div className="top" style={{paddingTop:8}}><div className="title" style={{fontSize:26,padding:'6px 0 2px'}}>{t('activity')}</div>
+   <div className="fchips">{['all','replies','tickets'].map(k=><button key={k} className={f===k?'on':''} onClick={()=>setF(k)}>{t('f_'+k)}</button>)}</div></div>
+  {mine.map(n=>{const p=posts.find(x=>x.id===n.postId); const [ic,col]=BADGE[n.type]; const from=n.from&&!n.anon?USERS[n.from]:null;
+   const sys=['status','official','ticket'].includes(n.type);
+   return <div key={n.id} className={'nrow'+(n.read?'':' unread')} onClick={()=>p?go.post(p.id):from&&go.profile(from.id)}>
+    <div style={{position:'relative'}}>{sys&&n.type!=='official'?<div className="av anon" style={{width:36,height:36}}><Icon n={p&&p.type==='lost'?'box':'mega'} s={18}/></div>:<Avatar uid={from?from.id:null} anon={!from}/>}<span className="nb" style={{background:col}}><Icon n={ic} s={10} sw={2.8} fill={n.type==='like'?'currentColor':'none'}/></span></div>
+    <div className="ntx">
+     {sys?<><b>{t('n_'+n.type)}</b>{p&&p.ticket&&<> · {pad(p.ticket.num)}</>} <span className="time">{ago(n.at)}</span>
+       {n.type==='status'&&<div className="chips"><span className={'chip '+TONE[n.status]}>{t('st_'+n.status)}</span></div>}</>
+      :<><b>{from?from.name:t('anon')}</b> {t('n_'+n.type)} <span className="time">{ago(n.at)}</span></>}
+     {p&&<div className="ns">{n.type==='official'&&p.ticket&&p.ticket.official?p.ticket.official.text:p.text}</div>}
+    </div>
+   </div>})}
+  {!mine.length&&<div className="empty">{t('noNotif')}</div>}
+ </div>;
+}
+
+function Profile({uid:id}){
+ const {me,t,lang,posts,following,act,go,setSheet,role,setRole,stack}=useApp();
+ const u=USERS[id]; const isMe=id===me.id; const [tab,setTab]=useState('threads');
+ const top=posts.filter(p=>!p.parentId&&!p.chainOf&&p.authorId===id&&(isMe||!p.anon||p.kind==='repost'));
+ const list=(tab==='threads'?top.filter(p=>p.kind==='repost'||!p.ticket):tab==='tickets'?top.filter(p=>p.ticket&&p.kind==='post'):posts.filter(p=>p.type==='reply'&&p.authorId===id)).sort((a,b)=>b.createdAt-a.createdAt);
+ const grp=typeof u.group==='object'?u.group[lang]:u.group;
+ const fol=u.followers+(following.includes(id)?1:0);
+ return <div className={stack.length?'view':''}>
+  <div className="top"><div className="bar">
+   <div className="l">{stack.length?<button className="ib" aria-label="back" onClick={go.back}><Icon n="back" s={24}/></button>:<button className="ib" aria-label="language" onClick={()=>act.setLang(lang==='kz'?'ru':'kz')}><Icon n="globe" s={21}/></button>}</div>
+   <div/>
+   <div className="r">{isMe&&<button className="ib" aria-label={t('settings')} onClick={()=>setSheet({kind:'settings'})}><Icon n="menu" s={24}/></button>}</div>
+  </div></div>
+  <div className="prof">
+   <div className="pt"><div style={{minWidth:0}}><h1>{u.name}</h1><div className="hd"><span>@{u.handle}</span><span className="pill">{grp}</span><VBadge role={u.role}/></div></div><Avatar uid={id} size={76}/></div>
+   <div className="bio">{u.bio[lang]}</div>
+   <div className="fl">{fol.toLocaleString('ru-RU')} {t('followers')} · {t('college')}</div>
+   <div className="bt">{isMe?<><button className="btn wide" onClick={()=>act.toast(t('profileSoon'))}>{t('editProfile')}</button><button className="btn wide" onClick={()=>act.copy('https://tarmak.vercel.app/@'+u.handle,t('linkCopied'))}>{t('shareProfile')}</button></>
+    :<><button className={'btn wide'+(following.includes(id)?'':' pri')} onClick={()=>act.follow(id)}>{following.includes(id)?t('following'):t('follow')}</button><button className="btn wide" onClick={()=>act.copy('https://tarmak.vercel.app/@'+u.handle,t('linkCopied'))}>{t('share')}</button></>}</div>
+   {isMe&&<div className="democard"><div className="dh"><span>{t('demoRole')}</span>{role==='admin'&&<button className="btn sm pri" onClick={go.admin}><Icon n="dash" s={14}/>{t('adminPanel')}</button>}</div>
+    <div className="seg">{['student','teacher','admin'].map(r=><button key={r} className={role===r?'on':''} onClick={()=>setRole(r)}>{t('r_'+r)}</button>)}</div></div>}
+  </div>
+  <nav className="tabs" style={{margin:'8px 0 0'}}>{['threads','replies','tickets'].map(k=><button key={k} style={{flex:1}} className={tab===k?'on':''} onClick={()=>setTab(k)}>{t('p_'+k)}</button>)}</nav>
+  {isMe&&tab!=='replies'&&list.some(p=>p.anon)&&<div className="hint" style={{marginTop:10}}><Icon n="eyeoff" s={14}/>{t('selfOnly')}</div>}
+  {list.map(p=>tab==='replies'?<div key={p.id} className="item"><PostCard post={p}/></div>:<FeedItem key={p.id} p={p}/>)}
+  {!list.length&&<div className="empty">—</div>}
+ </div>;
+}
+
+function Admin(){
+ const {posts,t,lang,now,go}=useApp(); const [f,setF]=useState('open'); const [open,setOpen]=useState(null);
+ const T=posts.filter(p=>p.kind==='post'&&p.ticket);
+ const solved=T.filter(p=>SOLVED.includes(p.ticket.status));
+ const times=solved.filter(p=>p.ticket.resolvedAt).map(p=>(p.ticket.resolvedAt-p.createdAt)/H);
+ const sum=times.reduce((a,b)=>a+b,0), n=times.length, avg=n?sum/n:0;
+ const over=T.filter(p=>isOver(p.ticket,now));
+ const pct=T.length?Math.round(solved.length/T.length*100):0;
+ const byCat=ALLCATS.map(c=>{const all=T.filter(p=>p.ticket.cat===c);return {c,n:all.length,s:all.filter(p=>SOLVED.includes(p.ticket.status)).length}});
+ const maxC=Math.max(1,...byCat.map(x=>x.n));
+ const statuses=[...TFLOW,...LFLOW.filter(s=>s!=='returned'),'returned'];
+ const byS=['accepted','review','searching','found','resolved','returned','rejected'].map(s=>({s,n:T.filter(p=>p.ticket.status===s).length})).filter(x=>x.n);
+ const list=T.filter(p=>f==='all'||(f==='open'?!CLOSED.includes(p.ticket.status):f==='overdue'?isOver(p.ticket,now):CLOSED.includes(p.ticket.status))).sort((a,b)=>(isOver(b.ticket,now)-isOver(a.ticket,now))||b.ticket.num-a.ticket.num);
+ const fmtH=h=>h>=48?(h/24).toFixed(1):h.toFixed(1);
+ return <div className="view">
+  <SubBar title={t('adminPanel')}/>
+  <div className="kpis">
+   <div className="kpi"><div className="k">{t('total')}</div><div className="v">{T.length}</div><div className="k">{T.filter(p=>!CLOSED.includes(p.ticket.status)).length} {t('f_open').toLowerCase()}</div></div>
+   <div className="kpi"><div className="k">{t('solvedPct')}</div><div className="v">{pct}<small>%</small></div><div className="spark"><i style={{width:pct+'%'}}/></div></div>
+   <div className="kpi"><div className="k">{t('avgT')}</div><div className="v">{fmtH(avg)}<small>{avg>=48?t('d'):t('h')}</small></div><div className="k">n = {n}</div></div>
+   <div className={'kpi'+(over.length?' alert':'')}><div className="k">{t('overdueN')}</div><div className="v">{over.length}</div><div className="k">SLA</div></div>
+  </div>
+  <div className="panel"><h3>{t('avgT')}</h3>
+   <div className="formula"><i>T</i> = <span className="frac"><span>Σ tᵢ</span><span>n</span></span> = <span className="frac"><span>{sum.toFixed(1)} {t('h')}</span><span>{n}</span></span> = <b>{avg.toFixed(1)} {t('h')}</b></div>
+   <div className="fnote">{t('fNote')}</div></div>
+  <div className="panel"><h3>{t('byCat')}</h3>
+   {byCat.map(x=><div key={x.c} className="brow"><span className="nm">{t('c_'+x.c)}</span><span className="bt"><i style={{width:x.n/maxC*100+'%'}}/><i className="s" style={{width:x.s/maxC*100+'%'}}/></span><span className="n">{x.s}/{x.n}</span></div>)}
+   <div className="legend"><span><i style={{background:'var(--ok)'}}/>{t('solvedOf')}</span><span><i style={{background:'color-mix(in srgb,var(--fg) 28%,transparent)'}}/>{t('total').toLowerCase()}</span></div></div>
+  <div className="panel"><h3>{t('byStatus')}</h3>
+   <div className="stack">{byS.map(x=><i key={x.s} style={{flex:x.n,background:TONEVAR[TONE[x.s]],opacity:x.s==='rejected'?.5:1}}/>)}</div>
+   <div className="legend">{byS.map(x=><span key={x.s}><i style={{background:TONEVAR[TONE[x.s]],opacity:x.s==='rejected'?.5:1}}/>{t('st_'+x.s)} · {x.n}</span>)}</div></div>
+  <div className="fchips">{['open','overdue','closed','all'].map(k=><button key={k} className={f===k?'on':''} onClick={()=>setF(k)}>{t('f_'+k)}{k==='overdue'&&over.length?' · '+over.length:''}</button>)}</div>
+  {list.map(p=>{const tk=p.ticket;const ov=isOver(tk,now);return <div key={p.id} className="tk">
+   <div className="th"><span className="chip num">{pad(tk.num)}</span><span className="chip">{t('c_'+tk.cat)}</span><span className={'chip '+TONE[tk.status]}>{t('st_'+tk.status)}</span>{ov&&<span className="chip solid-bad"><Icon n="alert" s={12} sw={2.6}/>{t('overdue')}</span>}
+    <button className="btn sm" style={{marginLeft:'auto'}} onClick={()=>setOpen(open===p.id?null:p.id)}>{open===p.id?<Icon n="x" s={14}/>:<Icon n="shield" s={14}/>}{t('edit')}</button></div>
+   <div className="tt" onClick={()=>go.post(p.id)}>{p.text}</div>
+   <div className="meta"><span><Icon n="pin" s={13}/>{t('b_'+tk.loc.b)}{tk.loc.r?' · '+tk.loc.r:''}</span>{tk.deadline&&!CLOSED.includes(tk.status)&&<span className={ov?'late':''}><Icon n="clock" s={13}/>{fmtDate(tk.deadline,lang)}</span>}<span><Icon n="user" s={13}/>{p.anon?t('anon'):USERS[p.authorId].name}</span></div>
+   {open===p.id&&<TicketAdmin post={p}/>}
+  </div>})}
+  {!list.length&&<div className="empty">—</div>}
+ </div>;
+}
+
+/* ---------- sheets ---------- */
+function Sheets(){
+ const {sheet,setSheet,posts,t,me,role,act,setComposer,lang,themePref,setThemePref,setRole,go}=useApp();
+ if(!sheet) return null; const close=()=>setSheet(null);
+ const p=sheet.id&&posts.find(x=>x.id===sheet.id);
+ let body=null;
+ if(sheet.kind==='repost'&&p){const mine=p.repostedBy.includes(me.id);
+  body=<div className="menu"><button onClick={()=>{act.repost(p.id);close()}} style={mine?{color:'var(--bad)'}:null}>{mine?t('removeRepost'):t('repost')}<Icon n="repeat" s={20}/></button><button onClick={()=>{close();setComposer({quoteId:p.id})}}>{t('quote')}<Icon n="quote" s={20}/></button></div>}
+ if(sheet.kind==='share'&&p){const link='https://tarmak.vercel.app/p/'+p.id;const card=(p.ticket?pad(p.ticket.num)+' · '+t('st_'+p.ticket.status)+'\n':'')+(p.anon?t('anon'):USERS[p.authorId].name)+': '+p.text+'\n'+link;
+  body=<><div className="sh-title" style={{wordBreak:'break-all',color:'var(--muted)',fontWeight:500,fontSize:13}}>{link}</div><div className="menu"><button onClick={()=>{act.copy(link,t('linkCopied'));close()}}>{t('copyLink')}<Icon n="link" s={20}/></button><button onClick={()=>{act.copy(card,t('cardCopied'));close()}}>{t('sendCard')}<Icon n="copy" s={20}/></button></div></>}
+ if(sheet.kind==='more'&&p){body=<div className="menu">
+  <button onClick={()=>{act.copy('https://tarmak.vercel.app/p/'+p.id,t('linkCopied'));close()}}>{t('copyLink')}<Icon n="link" s={20}/></button>
+  {role==='admin'&&p.ticket&&<button onClick={()=>{close();go.post(p.id)}}>{t('openAdmin')}<Icon n="shield" s={20}/></button>}
+  {(role==='admin'||p.authorId===me.id)&&<button className="danger" onClick={()=>{act.del(p.id);close()}}>{t('delete')}<Icon n="trash" s={20}/></button>}
+ </div>}
+ if(sheet.kind==='settings'){body=<>
+  <div className="sh-title">{t('settings')}</div>
+  <span className="lbl">{t('language')}</span><div className="seg"><button className={lang==='kz'?'on':''} onClick={()=>act.setLang('kz')}>Қазақша</button><button className={lang==='ru'?'on':''} onClick={()=>act.setLang('ru')}>Русский</button></div>
+  <span className="lbl">{t('theme')}</span><div className="seg">{['system','light','dark'].map(k=><button key={k} className={themePref===k?'on':''} onClick={()=>setThemePref(k)}>{t(k)}</button>)}</div>
+  <span className="lbl">{t('demoRole')}</span><div className="seg">{['student','teacher','admin'].map(r=><button key={r} className={role===r?'on':''} onClick={()=>setRole(r)}>{t('r_'+r)}</button>)}</div>
+  <div style={{height:14}}/>
+  <div className="menu">{role==='admin'&&<button onClick={()=>{close();go.admin()}}>{t('adminPanel')}<Icon n="dash" s={20}/></button>}<button className="danger" onClick={()=>{act.reset();close()}}>{t('reset')}<Icon n="reset" s={20}/></button></div>
+ </>}
+ if(!body) return null;
+ return <><div className="scrim" onClick={close}/><div className="sheet" role="dialog" aria-modal="true"><div className="grab"/>{body}</div></>;
+}
+
+/* ---------- app ---------- */
+function App(){
+ const init=useMemo(()=>loadState()||seed(Date.now()),[]);
+ const [posts,setPosts]=useState(init.posts);
+ const [nextNum,setNextNum]=useState(init.nextNum);
+ const [notifs,setNotifs]=useState(init.notifs);
+ const [following,setFollowing]=useState(init.following);
+ const [lang,setLang]=useState(init.lang||'kz');
+ const [role,setRoleS]=useState(init.role||'student');
+ const [themePref,setThemePref]=useState(init.themePref||'system');
+ const [tab,setTab]=useState('home');
+ const [stack,setStack]=useState([]);
+ const [feedTab,setFeedTab]=useState('all');
+ const [query,setQuery]=useState('');
+ const [composer,setComposer]=useState(null);
+ const [sheet,setSheet]=useState(null);
+ const [toast,setToast]=useState(null);
+ const [now,setNow]=useState(Date.now());
+ const [pending,setPending]=useState(null);
+ const me=USERS[ROLE_USER[role]];
+ const t=k=>(I18N[lang][k]??k);
+ const scrollMem=useRef({}); const origTheme=useRef(document.documentElement.getAttribute('data-theme'));
+ const view=stack.length?stack[stack.length-1]:{name:tab};
+ const vkey=JSON.stringify(view)+stack.length;
+
+ useEffect(()=>{const i=setInterval(()=>setNow(Date.now()),30e3);return()=>clearInterval(i)},[]);
+ useEffect(()=>{saveState({v:1,posts,nextNum,notifs,following,lang,role,themePref})},[posts,nextNum,notifs,following,lang,role,themePref]);
+ useEffect(()=>{const el=document.documentElement;if(themePref==='system'){origTheme.current?el.setAttribute('data-theme',origTheme.current):el.removeAttribute('data-theme')}else el.setAttribute('data-theme',themePref)},[themePref]);
+ useEffect(()=>{document.documentElement.lang=lang==='kz'?'kk':'ru'},[lang]);
+ useEffect(()=>{if(posts.some(p=>p.id==='p_live'))return;const tm=setTimeout(()=>setPending(LIVE(Date.now())),20e3);return()=>clearTimeout(tm)},[]);
+ useLayoutEffect(()=>{window.scrollTo(0,scrollMem.current[vkey]||0)},[vkey]);
+ const tmr=useRef();
+ const showToast=s=>{setToast({s,k:Date.now()});clearTimeout(tmr.current);tmr.current=setTimeout(()=>setToast(null),2200)};
+
+ const rootOf=id=>{let p=posts.find(x=>x.id===id);while(p&&p.parentId){const q=posts.find(x=>x.id===p.parentId);if(!q)break;p=q}return p?(p.chainOf||p.id):id};
+ const go={
+  tab:k=>{scrollMem.current[vkey]=window.scrollY;setStack([]);setTab(k);if(k==='home'&&tab==='home'&&!stack.length)window.scrollTo({top:0,behavior:'smooth'})},
+  push:v=>{scrollMem.current[vkey]=window.scrollY;setStack(s=>[...s,v])},
+  back:()=>setStack(s=>s.slice(0,-1)),
+  post:(id,o={})=>go.push({name:'post',id:rootOf(id),focus:!!o.focus}),
+  profile:id=>go.push({name:'profile',uid:id}),
+  handle:h=>{const u=Object.values(USERS).find(u=>u.handle.toLowerCase()===h.toLowerCase());u?go.profile(u.id):go.search('@'+h)},
+  search:q=>{setQuery(q);setStack([]);setTab('search')},
+  admin:()=>go.push({name:'admin'}),
+ };
+ const upd=(id,fn)=>setPosts(ps=>ps.map(p=>p.id===id?fn(p):p));
+ const updT=(id,fn)=>upd(id,p=>({...p,ticket:fn(p.ticket)}));
+ const notify=n=>setNotifs(ns=>[{id:uid(),at:Date.now(),read:false,...n},...ns]);
+ const get=id=>posts.find(p=>p.id===id);
+ const act={
+  toast:showToast,
+  setLang:l=>setLang(l),
+  copy:(s,msg)=>{copyText(s).then(ok=>showToast(ok?msg:I18N[lang].copyFail+': '+s))},
+  like:id=>{const p=get(id);upd(id,p=>({...p,likedBy:tog(p.likedBy,me.id)}));if(p&&!p.likedBy.includes(me.id)&&p.authorId!==me.id)notify({to:p.authorId,type:'like',from:me.id,postId:id})},
+  vote:(id,i)=>upd(id,p=>{const by={...p.poll.by};if(by[me.id]===i)delete by[me.id];else by[me.id]=i;return {...p,poll:{...p.poll,by}}}),
+  confirm:id=>{const p=get(id);updT(id,tk=>({...tk,confirmedBy:tog(tk.confirmedBy,me.id)}));if(p&&!p.ticket.confirmedBy.includes(me.id)&&p.authorId!==me.id)notify({to:p.authorId,type:'confirm',from:me.id,postId:id})},
+  follow:id=>{const was=following.includes(id);setFollowing(f=>tog(f,id));showToast(was?t('unfollowed'):t('followed')+': '+USERS[id].name)},
+  repost:id=>{const p=get(id);const mine=posts.find(x=>x.kind==='repost'&&x.repostOf===id&&x.authorId===me.id);
+   if(p.repostedBy.includes(me.id)){setPosts(ps=>ps.filter(x=>!(x.kind==='repost'&&x.repostOf===id&&x.authorId===me.id)).map(x=>x.id===id?{...x,repostedBy:x.repostedBy.filter(v=>v!==me.id)}:x));showToast(t('repostRemoved'))}
+   else{setPosts(ps=>[{id:uid(),kind:'repost',authorId:me.id,repostOf:id,createdAt:Date.now(),likedBy:[],repostedBy:[],text:''},...ps.map(x=>x.id===id?{...x,repostedBy:[...x.repostedBy,me.id]}:x)]);if(p.authorId!==me.id)notify({to:p.authorId,type:'repost',from:me.id,postId:id});showToast(t('repostDone'))}},
+  publish:d=>{const ts=Date.now();const headId=uid();const isT=d.type!=='talk';
+   const segs=d.segs.filter(s=>s.text.trim()||s.images.length||s.poll);
+   const made=segs.map((s,i)=>mkPost({id:i===0?headId:uid(),type:d.type,authorId:me.id,anon:d.anon,text:s.text.trim(),images:s.images,
+    poll:s.poll?{options:s.poll.options.filter(o=>o.trim()).map(o=>({text:o.trim(),base:0})),by:{}}:null,
+    quoteId:i===0?d.quoteId:null,chainOf:i===0?null:headId,chainIdx:i,createdAt:ts+i,
+    ticket:i===0&&isT?mkTicket({num:nextNum,cat:d.type==='complaint'?d.cat:d.type,loc:{...d.loc},status:d.type==='lost'?'searching':'accepted'}):null}));
+   setPosts(ps=>[...made,...ps]);
+   if(isT){setNextNum(n=>n+1);notify({to:'a1',type:'ticket',from:d.anon?null:me.id,anon:d.anon,postId:headId})}
+   if(d.quoteId){const q=get(d.quoteId);if(q&&q.authorId!==me.id)notify({to:q.authorId,type:'quote',from:me.id,postId:headId})}
+   setComposer(null);setStack([]);setTab('home');setFeedTab('all');setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),30);
+   showToast(isT?t('published')+' · '+pad(nextNum):t('published'));
+   const author=me.id;const liker=['u2','u3','u4','t2'].find(x=>x!==author);
+   setTimeout(()=>{setPosts(ps=>ps.map(p=>p.id===headId?{...p,likes:p.likes+1}:p));notify({to:author,type:'like',from:liker,postId:headId})},4000)},
+  reply:(pid,text)=>{const p=get(pid);setPosts(ps=>[...ps,mkPost({id:uid(),type:'reply',parentId:pid,authorId:me.id,text,createdAt:Date.now()})]);if(p&&p.authorId!==me.id)notify({to:p.authorId,type:'reply',from:me.id,postId:pid});showToast(t('published'))},
+  setStatus:(id,s)=>{const p=get(id);updT(id,tk=>({...tk,status:s,resolvedAt:SOLVED.includes(s)?(tk.resolvedAt&&SOLVED.includes(tk.status)?tk.resolvedAt:Date.now()):null}));notify({to:p.authorId,type:'status',postId:id,status:s});showToast(t('statusChanged')+': '+t('st_'+s))},
+  setDeadline:(id,ts)=>{updT(id,tk=>({...tk,deadline:ts}));showToast(t('deadlineSet')+': '+fmtDate(ts,lang))},
+  setOfficial:(id,text)=>{const p=get(id);updT(id,tk=>({...tk,official:{by:me.id,at:Date.now(),text}}));notify({to:p.authorId,type:'official',from:me.id,postId:id});showToast(t('published'))},
+  del:id=>{setPosts(ps=>ps.filter(p=>p.id!==id&&p.chainOf!==id&&p.repostOf!==id&&p.parentId!==id));if(view.name==='post'&&view.id===id)go.back();showToast(t('deleted'))},
+  reset:()=>{const s=seed(Date.now());setPosts(s.posts);setNextNum(s.nextNum);setNotifs(s.notifs);setFollowing(s.following);setStack([]);setTab('home');setPending(null);showToast(t('resetDone'))},
+ };
+ const setRole=r=>{setRoleS(r);showToast(I18N[lang].roleSet+' '+I18N[lang]['r_'+r])};
+ const markRead=()=>setNotifs(ns=>ns.map(n=>n.to===me.id?{...n,read:true}:n));
+ const acceptPending=()=>{setPosts(ps=>[pending,...ps]);setPending(null);window.scrollTo({top:0,behavior:'smooth'})};
+ const unread=notifs.some(n=>n.to===me.id&&!n.read);
+ const ctx={posts,t,lang,me,role,now,following,notifs,nextNum,go,act,setSheet,sheet,setComposer,feedTab,setFeedTab,query,setQuery,pending,acceptPending,setLang,themePref,setThemePref,setRole,stack,markRead};
+
+ let body;
+ if(view.name==='post') body=<PostDetail key={vkey} id={view.id} focus={view.focus}/>;
+ else if(view.name==='profile') body=<Profile key={vkey} uid={view.uid}/>;
+ else if(view.name==='admin') body=<Admin key={vkey}/>;
+ else if(view.name==='search') body=<Search/>;
+ else if(view.name==='notif') body=<Notifs key={role}/>;
+ else if(view.name==='me') body=<Profile key={'me'+role} uid={me.id}/>;
+ else body=<Feed/>;
+ const NB=({k,ic,label})=><button className={!stack.length&&tab===k?'on':''} aria-label={label} onClick={()=>go.tab(k)}><Icon n={ic} s={26} sw={!stack.length&&tab===k?2.4:1.9} fill={k==='notif'&&!stack.length&&tab===k?'currentColor':'none'}/>{k==='notif'&&unread&&<span className="dot"/>}</button>;
+ return <Ctx.Provider value={ctx}>
+  <div className="app">{body}</div>
+  <nav className="nav"><div className="in">
+   <NB k="home" ic="home" label="Home"/><NB k="search" ic="search" label={t('search')}/>
+   <button className="plusb" aria-label={t('newThread')} onClick={()=>setComposer({})}><Icon n="plus" s={24} sw={2.2}/></button>
+   <NB k="notif" ic="heart" label={t('activity')}/><NB k="me" ic="user" label="Profile"/>
+  </div></nav>
+  {composer&&<Composer init={composer} onClose={()=>setComposer(null)}/>}
+  <Sheets/>
+  {toast&&<div className="toastw"><div className="toast" key={toast.k} role="status">{toast.s}</div></div>}
+ </Ctx.Provider>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
